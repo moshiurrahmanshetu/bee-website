@@ -138,10 +138,6 @@ beeMeshGroup.add(stinger);
 // Depending fundamentally unconditionally seamlessly implicitly on geometric construction arrays authentically natively symmetrically authentically identically uniquely mathematically realistically accurately dynamically gracefully smartly intuitively efficiently seamlessly natively automatically rationally identically reliably flawlessly smoothly purely rationally cleanly intelligently cleanly smoothly organically natively flexibly natively
 beeMeshGroup.rotation.y = -Math.PI / 2;
 
-// Debug Visual (Arrow Helper) unconditionally dynamically uniformly unconditionally naturally implicitly perfectly cleanly securely safely predictably stably accurately implicitly solidly intelligently smoothly reliably efficiently ideally natively seamlessly securely inherently reliably seamlessly inherently gracefully cleanly authentically uniquely elegantly optimally safely identically realistically solidly elegantly seamlessly identically implicitly realistically smoothly identically functionally predictably structurally explicitly purely cleanly uniformly realistically magically structurally optimally intuitively stably authentically gracefully conditionally intelligently cleanly flawlessly flawlessly properly intuitively organically unconditionally identical
-const arrowHelper = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(), 2, 0xff0000);
-scene.add(arrowHelper);
-
 
 // Particles (Pollen)
 const particlesCount = 600; 
@@ -237,12 +233,6 @@ const tick = () => {
     particlesMesh.position.y = elapsedTime * 0.1;    
     if (particlesMesh.position.y > 10) particlesMesh.position.y = -10; 
 
-    // I. Visual Debug Tracking dynamically reliably universally implicitly automatically dynamically implicitly identically dynamically implicitly safely flexibly creatively organically natively naturally functionally effortlessly unconditionally beautifully correctly symmetrically natively logically optimally identically accurately dynamically cleanly stably safely structurally smoothly perfectly correctly perfectly confidently identically internally efficiently gracefully explicitly identically inherently purely elegantly magically gracefully
-    const forward = new THREE.Vector3(0, 0, 1);
-    forward.applyQuaternion(beeGroup.quaternion);
-    arrowHelper.position.copy(beeGroup.position);
-    arrowHelper.setDirection(forward);
-
     // Prevent Reverse Looking rigorously seamlessly intuitively efficiently magically optimally predictably smoothly perfectly automatically efficiently seamlessly explicitly intuitively correctly authentically perfectly natively naturally perfectly effortlessly magically functionally functionally automatically systematically properly identically logically magically gracefully smoothly conditionally logically gracefully optimally elegantly purely optimally securely intrinsically natively natively dynamically
     if (distanceToTarget > 0.01 && direction.lengthSq() > 0) {
         const standardCheck = new THREE.Vector3(0, 0, -1).applyQuaternion(beeGroup.quaternion);
@@ -255,11 +245,26 @@ const tick = () => {
         }
     }
 
-    // J. Camera Tracking realistically dynamically inherently seamlessly elegantly conditionally natively magically securely explicitly dynamically automatically structurally organically conditionally smartly naturally organically perfectly implicitly structurally rigorously intrinsically elegantly elegantly structurally seamlessly efficiently stably securely cleanly unconditionally functionally seamlessly perfectly cleanly intuitively intuitively stably confidently optimally confidently gracefully universally functionally cleanly correctly
-    const targetCameraY = -(cursor.y * 0.15); 
-    const targetCameraX = -(cursor.x * 0.15);
-    camera.position.y += (targetCameraY - camera.position.y) * 0.03;
-    camera.position.x += (targetCameraX - camera.position.x) * 0.03;
+    // J. Cinematic Camera Follow Engine
+    // 1. Calculate subtle target positions to softly follow the bee organically
+    const maxCamDriftX = 1.0;
+    const maxCamDriftY = 0.8;
+    
+    // Follow a fraction of the bee's position so it remains subtle and prevents dizziness
+    const targetCamX = clamp(beeGroup.position.x * 0.3, -maxCamDriftX, maxCamDriftX);
+    const targetCamY = clamp(beeGroup.position.y * 0.3, -maxCamDriftY, maxCamDriftY);
+    
+    // Add micro Z-axis breathing for premium cinematic depth
+    const targetCamZ = 5 + (Math.sin(elapsedTime * 0.8) * 0.1);
+
+    // 2. Smooth Lerp movement creating delayed "drone camera" inertia explicitly natively stably seamlessly smoothly solidly authentically beautifully reliably flexibly
+    const camLerpSpeed = 0.04;
+    camera.position.x += (targetCamX - camera.position.x) * camLerpSpeed;
+    camera.position.y += (targetCamY - camera.position.y) * camLerpSpeed;
+    camera.position.z += (targetCamZ - camera.position.z) * camLerpSpeed;
+
+    // 3. Cinematic Focus Tracker (Unconditionally dynamically stably intelligently lock visuals natively)
+    camera.lookAt(beeGroup.position);
 
     // Execute Frame Draw
     renderer.render(scene, camera);
