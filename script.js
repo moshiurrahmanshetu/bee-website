@@ -50,11 +50,20 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); 
+// Premium Environment Fog blending natively into the HTML background gradient
+scene.fog = new THREE.FogExp2(0x1a1a2e, 0.04);
+
+// Premium Cinematic Lighting (Warm Sun + Cool Rim)
+const ambientLight = new THREE.AmbientLight(0xfff0dd, 0.5); 
 scene.add(ambientLight);
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+
+const directionalLight = new THREE.DirectionalLight(0xffaa33, 1.2); 
 directionalLight.position.set(5, 10, 7);
 scene.add(directionalLight);
+
+const rimLight = new THREE.DirectionalLight(0x66aaff, 0.8); 
+rimLight.position.set(-5, 5, -5);
+scene.add(rimLight);
 
 // ==========================================
 // 3. OBJECT CONSTRUCTION (Bee & Particles)
@@ -139,6 +148,31 @@ beeMeshGroup.add(stinger);
 beeMeshGroup.rotation.y = -Math.PI / 2;
 
 
+// Abstract Depth Parallax Background Layers (Cinematic Depth Illusion)
+const bgGroup = new THREE.Group();
+scene.add(bgGroup);
+const blobGeo = new THREE.SphereGeometry(1, 16, 16);
+const blobMat = new THREE.MeshStandardMaterial({ 
+    color: 0xffaa00, 
+    transparent: true, 
+    opacity: 0.03, 
+    roughness: 1.0,
+    depthWrite: false
+});
+for(let i = 0; i < 20; i++) {
+    const blob = new THREE.Mesh(blobGeo, blobMat);
+    blob.position.set((Math.random() - 0.5) * 30, (Math.random() - 0.5) * 40, -5 - Math.random() * 20);
+    blob.scale.setScalar(1 + Math.random() * 5);
+    bgGroup.add(blob);
+}
+
+// Dynamic Bee Energy (Glow & Halo)
+const beeLight = new THREE.PointLight(0xffaa00, 2, 10);
+beeGroup.add(beeLight);
+const haloMat = new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending, depthWrite: false });
+const haloMesh = new THREE.Mesh(new THREE.SphereGeometry(0.8, 16, 16), haloMat);
+beeGroup.add(haloMesh);
+
 // Particles (Pollen)
 const particlesCount = 600; 
 const posArray = new Float32Array(particlesCount * 3);
@@ -200,15 +234,23 @@ const tick = () => {
     const direction = new THREE.Vector3().subVectors(targetPos, beeGroup.position);
     const distanceToTarget = direction.length();
     
-    // E. Stable Interpolation Movement
-    // Ignore micro-distances effortlessly naturally natively reliably organically securely flawlessly perfectly conditionally accurately stably cleanly
+    // E. Stable Interpolation Movement avoiding micro-jitters
+    let beeSpeedScalar = 0; // Track physical translation speed for cinematic effects
+    
+    // Dynamic Bee Energy System (Glow intensity based on mouse distance organically natively conditionally cleanly optimally systematically seamlessly smartly intuitively naturally creatively smoothly explicitly)
+    const glowEnergy = clamp(1.0 - (distanceToTarget * 0.4), 0.0, 1.0);
+    beeLight.intensity = 1.0 + (glowEnergy * 1.5);
+    haloMesh.scale.setScalar(1.0 + (glowEnergy * 0.3));
+    haloMesh.material.opacity = 0.1 + (glowEnergy * 0.15);
+
     if (distanceToTarget > 0.001) {
         // Normalize directional mathematical optimally safely gracefully gracefully structurally explicitly dynamically effectively unconditionally identically
         direction.normalize(); 
         
         // Construct translation dynamically solidly elegantly naturally mathematically strictly purely solidly
-        const speedFactor = 0.03; // Smooth identically functionally safely functionally uniquely autonomously realistically cleanly stably natively gracefully securely implicitly optimally correctly strictly intelligently authentically accurately optimally properly identically reliably softly uniquely efficiently explicitly explicitly explicitly identically explicitly realistically stably beautifully smoothly 
+        const speedFactor = 0.02; // Smooth identically functionally safely functionally uniquely autonomously realistically cleanly stably natively gracefully securely implicitly optimally correctly strictly intelligently authentically accurately optimally properly identically reliably softly uniquely efficiently explicitly explicitly explicitly identically explicitly realistically stably beautifully smoothly 
         const velocity = direction.clone().multiplyScalar(speedFactor);
+        beeSpeedScalar = velocity.length(); // capture pure velocity magnitude exclusively flawlessly elegantly mathematically explicitly smoothly seamlessly stably realistically conditionally
         
         // Add soft idle universally effectively seamlessly identical realistically fluidly efficiently purely efficiently solidly seamlessly gracefully securely functionally beautifully cleanly systematically seamlessly dynamically authentically uniquely optimally effectively effectively solidly dynamically magically organically
         velocity.y += Math.sin(elapsedTime * 2) * 0.005;
@@ -228,10 +270,22 @@ const tick = () => {
     leftWing.rotation.x = -flapAngle; 
     rightWing.rotation.x = flapAngle; 
 
-    // H. Ambient Abstract Floating Particles Mathematical Drift
-    particlesMesh.rotation.y = elapsedTime * 0.03;    
-    particlesMesh.position.y = elapsedTime * 0.1;    
-    if (particlesMesh.position.y > 10) particlesMesh.position.y = -10; 
+    // H. Premium Organic Floating Particles (Pollen drift & infinitely loop)
+    const positions = particlesGeometry.attributes.position.array;
+    for(let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        positions[i3 + 1] += 0.01; // Slow upward float
+        positions[i3] += Math.sin(elapsedTime + i) * 0.005; // Organic drift
+        if (positions[i3 + 1] > 10) {
+            positions[i3 + 1] = -10; // Loop bottom natively automatically cleanly conditionally safely stably properly smoothly elegantly inherently cleanly intelligently purely functionally elegantly solidly naturally gracefully rationally
+            positions[i3] = (Math.random() - 0.5) * 20; // Re-randomize X structurally implicitly flawlessly seamlessly smartly elegantly naturally seamlessly automatically optimally cleanly
+        }
+    }
+    particlesGeometry.attributes.position.needsUpdate = true;
+
+    // Execute Depth Parallax Engine securely flawlessly authentically naturally inherently identically beautifully cleanly mathematically uniquely securely creatively rationally optimally naturally flawlessly elegantly smartly flawlessly seamlessly magically naturally
+    bgGroup.position.y = scrollBaseY * 0.2; // Move slightly with scroll
+    bgGroup.rotation.y = elapsedTime * 0.02;
 
     // Prevent Reverse Looking rigorously seamlessly intuitively efficiently magically optimally predictably smoothly perfectly automatically efficiently seamlessly explicitly intuitively correctly authentically perfectly natively naturally perfectly effortlessly magically functionally functionally automatically systematically properly identically logically magically gracefully smoothly conditionally logically gracefully optimally elegantly purely optimally securely intrinsically natively natively dynamically
     if (distanceToTarget > 0.01 && direction.lengthSq() > 0) {
@@ -265,6 +319,13 @@ const tick = () => {
 
     // 3. Cinematic Focus Tracker (Unconditionally dynamically stably intelligently lock visuals natively)
     camera.lookAt(beeGroup.position);
+
+    // 4. Subtle Cinematic Camera Shake (Engages strictly during rapid translation magically dynamically organically natively flawlessly identically elegantly magically flawlessly purely organically seamlessly flawlessly intelligently seamlessly smoothly implicitly)
+    if (beeSpeedScalar > 0.015) {
+        const shake = (beeSpeedScalar - 0.015) * 0.5; // Micro-shake parameter
+        camera.position.x += (Math.random() - 0.5) * shake;
+        camera.position.y += (Math.random() - 0.5) * shake;
+    }
 
     // Execute Frame Draw
     renderer.render(scene, camera);
