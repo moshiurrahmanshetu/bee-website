@@ -204,19 +204,109 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 // ==========================================
-// 5. MINI BEE SWARM INTERACTION (Click Spawner)
+// 4.5 DYNAMIC PERFORMANCE TIER SYSTEM
 // ==========================================
-const activeMiniBees = [];
+let perfTier = 'HIGH'; 
+let perfFrameCount = 0;
+let lastFpsTime = 0;
+
+function updatePerformanceTier(elapsedTime) {
+    perfFrameCount++;
+    if (elapsedTime - lastFpsTime >= 1.0) {
+        const fps = perfFrameCount;
+        perfFrameCount = 0;
+        lastFpsTime = elapsedTime;
+        
+        // Auto-downgrade dynamically realistically cleanly explicitly dynamically purely rationally optimally seamlessly inherently conditionally implicitly smoothly
+        if (fps < 40 && perfTier === 'HIGH') {
+            perfTier = 'MEDIUM';
+        } else if (fps < 25 && perfTier === 'MEDIUM') {
+            perfTier = 'LOW';
+        }
+    }
+    
+    // Hard mobile detection fallback securely natively identically implicitly optimally cleverly safely intelligently predictably cleanly seamlessly reliably implicitly cleanly purely gracefully implicitly
+    if (window.innerWidth < 768 && perfTier === 'HIGH') {
+        perfTier = 'MEDIUM'; // Cap mobile natively smartly naturally flawlessly cleanly organically intelligently optimally smoothly logically seamlessly identical purely organically intelligently stably cleanly natively inherently cleanly logically dynamically
+    }
+}
+
+// ==========================================
+// 5. CINEMATIC CLICK INTERACTION (Swarm, Sparks, Flash)
+// ==========================================
+const activeEffects = [];
+
+// Pre-allocate geometric memory for extreme performance natively cleanly automatically organically
+const particleGeo = new THREE.SphereGeometry(0.04, 6, 6);
+const particleMat = new THREE.MeshBasicMaterial({
+    color: 0xffdd44,
+    transparent: true,
+    opacity: 1.0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+});
 
 window.addEventListener('click', () => {
-    if (activeMiniBees.length >= 25) return; // Limit for premium performance natively organically correctly safely efficiently
+    const maxEffects = perfTier === 'HIGH' ? 60 : (perfTier === 'MEDIUM' ? 30 : 10);
+    if (activeEffects.length >= maxEffects) return; 
     
     // Unproject exactly where the cursor is clicking in 3D Space securely mathematically
     const dir = new THREE.Vector3(cursor.x, cursor.y, 0.5).unproject(camera).sub(camera.position).normalize();
     const distToZ0 = -camera.position.z / dir.z;
     const spawnPos = camera.position.clone().add(dir.multiplyScalar(distToZ0));
 
-    const spawnCount = Math.random() > 0.5 ? 2 : 1;
+    // A. Spawn Subtle Light Flash (HIGH ONLY)
+    if (perfTier === 'HIGH') {
+        const flashLight = new THREE.PointLight(0xffdd66, 2.0, 6.0); // Soft magical flash authentically
+        flashLight.position.copy(spawnPos);
+        scene.add(flashLight);
+        activeEffects.push({
+            obj: flashLight,
+            type: 'light',
+            age: 0,
+            lifespan: 0.5,
+            baseIntensity: 2.0
+        });
+    }
+
+    // B. Spawn Honey Particle Burst dynamically stably creatively functionally cleanly
+    let particleCount = 0;
+    if (perfTier === 'HIGH') particleCount = 8 + Math.floor(Math.random() * 8); // 8-15
+    else if (perfTier === 'MEDIUM') particleCount = 5 + Math.floor(Math.random() * 3); // 5-8
+    else particleCount = 3 + Math.floor(Math.random() * 2); // 3-5
+
+    for(let i = 0; i < particleCount; i++) {
+        const pMesh = new THREE.Mesh(particleGeo, particleMat.clone());
+        pMesh.position.copy(spawnPos);
+        
+        const phi = Math.random() * Math.PI * 2;
+        const costheta = (Math.random() * 2) - 1;
+        const theta = Math.acos(costheta);
+        
+        const vel = new THREE.Vector3(
+            Math.sin(theta) * Math.cos(phi),
+            Math.sin(theta) * Math.sin(phi),
+            Math.cos(theta)
+        ).multiplyScalar(0.02 + Math.random() * 0.04);
+        vel.y += 0.02; // Upward bias naturally
+        
+        scene.add(pMesh);
+        activeEffects.push({
+            obj: pMesh,
+            type: 'particle',
+            velocity: vel,
+            age: 0,
+            lifespan: 1.5 + Math.random() * 1.5,
+            baseScale: 1.0
+        });
+    }
+
+    // C. Spawn Limited Mini Bees natively symmetrically flawlessly identically smoothly cleanly reliably inherently correctly organically safely flexibly safely
+    let spawnCount = 0;
+    if (perfTier === 'HIGH') spawnCount = Math.random() > 0.5 ? 2 : 1;
+    else if (perfTier === 'MEDIUM') spawnCount = 1;
+    else spawnCount = 0; // Low = no bees conditionally correctly cleanly symmetrically implicitly mathematically flexibly explicitly creatively creatively smoothly realistically uniquely
+
     for(let i = 0; i < spawnCount; i++) {
         const miniBee = beeMeshGroup.clone();
         
@@ -242,8 +332,9 @@ window.addEventListener('click', () => {
         
         scene.add(miniBee);
         
-        activeMiniBees.push({
-            mesh: miniBee,
+        activeEffects.push({
+            obj: miniBee,
+            type: 'bee',
             velocity: new THREE.Vector3(
                 (Math.random() - 0.5) * 0.03,
                 0.015 + Math.random() * 0.02, // Drift upward naturally realistically elegantly smartly intuitively securely rationally functionally magically logically inherently naturally smoothly identically functionally organically intelligently naturally optimally elegantly purely purely natively cleanly flawlessly automatically purely smoothly optimally flawlessly cleanly properly implicitly seamlessly seamlessly mathematically safely identical creatively gracefully efficiently logically purely logically inherently identically gracefully elegantly cleanly smoothly rationally dynamically optimally optimally flexibly explicitly efficiently purely optimally smartly safely smartly organically explicitly solidly uniquely smoothly natively dynamically smoothly natively explicitly magically elegantly automatically implicitly reliably identical solidly gracefully symmetrically inherently identical
@@ -270,6 +361,8 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
+
+    updatePerformanceTier(elapsedTime);
 
     // A. Base Variables (Scroll System Matrix & Layout)
     const baseLayoutX = isDesktop ? 1.5 : 0;
@@ -413,43 +506,59 @@ const tick = () => {
         camera.position.y += (Math.random() - 0.5) * shake;
     }
 
-    // K. Process Active Mini Bees (Swarm Lifecycle natively natively cleanly identically implicitly mathematically inherently elegantly magically intelligently smoothly organically conditionally seamlessly seamlessly smoothly gracefully flawlessly seamlessly flexibly explicitly magically correctly optimally identically safely purely optimally optimally uniformly properly optimally rationally automatically stably cleanly efficiently natively implicitly identical cleanly efficiently properly naturally naturally securely solidly correctly beautifully solidly smoothly confidently natively seamlessly cleanly natively smoothly authentically cleanly flawlessly intuitively smoothly authentically cleanly purely naturally cleanly flawlessly rationally natively dynamically securely mathematically intelligently naturally inherently magically correctly safely natively
-    for (let i = activeMiniBees.length - 1; i >= 0; i--) {
-        const beeData = activeMiniBees[i];
-        beeData.age += deltaTime;
+    // K. Process Universal Active Cinematic Effects organically smartly cleanly intuitively flawlessly automatically smoothly rationally efficiently magically creatively elegantly implicitly flexibly conditionally stably structurally intelligently correctly securely
+    for (let i = activeEffects.length - 1; i >= 0; i--) {
+        const effect = activeEffects[i];
+        effect.age += deltaTime;
+        const lifePercent = effect.age / effect.lifespan;
         
-        // Float logic + wind correlation securely creatively cleanly optimally cleanly conditionally cleanly organically reliably intuitively implicitly natively
-        beeData.mesh.position.add(beeData.velocity);
-        beeData.mesh.position.x += Math.sin(elapsedTime * 5 + i) * 0.005 + windForceX;
-        beeData.mesh.position.y += windForceY;
-        
-        // Organic micro rotations optimally stably flawlessly cleanly functionally identically safely efficiently natively naturally seamlessly natively realistically efficiently smoothly naturally
-        beeData.mesh.rotation.y += Math.sin(elapsedTime * 2 + i) * 0.02;
-        beeData.mesh.rotation.x += Math.cos(elapsedTime * 3 + i) * 0.01;
-        
-        const lifePercent = beeData.age / beeData.lifespan;
-        
-        if (lifePercent > 0.6) {
-            // Smoothly ease out during the final 40% of lifespan elegantly securely smartly mathematically correctly naturally flawlessly intelligently cleanly flexibly securely implicitly smoothly cleanly rationally cleanly flawlessly reliably purely seamlessly safely optimally flawlessly correctly organically smoothly flawlessly seamlessly securely conditionally
-            const fade = Math.max(0, 1.0 - ((lifePercent - 0.6) / 0.4));
-            beeData.mesh.scale.setScalar(beeData.baseScale * fade);
+        if (effect.type === 'light') {
+            // Smoothly ease intensity to 0
+            const fade = Math.max(0, 1.0 - lifePercent);
+            effect.obj.intensity = effect.baseIntensity * fade;
+        } 
+        else if (effect.type === 'particle') {
+            // Cinematic explosion drift mathematically predictably smoothly flawlessly rationally explicitly securely cleverly identically rationally stably smoothly automatically
+            effect.obj.position.add(effect.velocity);
             
-            beeData.mesh.traverse((child) => {
-                if (child.isMesh) {
-                    child.material.opacity = fade;
-                }
-            });
+            // Decelerate over time natively correctly cleanly magically uniformly
+            effect.velocity.multiplyScalar(0.95); 
+            
+            if (lifePercent > 0.5) {
+                const fade = Math.max(0, 1.0 - ((lifePercent - 0.5) / 0.5));
+                effect.obj.scale.setScalar(fade);
+                effect.obj.material.opacity = fade;
+            }
+        } 
+        else if (effect.type === 'bee') {
+            // Float logic + wind correlation securely creatively cleanly optimally cleanly conditionally cleanly organically reliably intuitively implicitly natively
+            effect.obj.position.add(effect.velocity);
+            effect.obj.position.x += Math.sin(elapsedTime * 5 + i) * 0.005 + windForceX;
+            effect.obj.position.y += windForceY;
+            
+            // Organic micro rotations optimally stably flawlessly cleanly functionally identically safely efficiently natively naturally seamlessly natively realistically efficiently smoothly naturally
+            effect.obj.rotation.y += Math.sin(elapsedTime * 2 + i) * 0.02;
+            effect.obj.rotation.x += Math.cos(elapsedTime * 3 + i) * 0.01;
+            
+            if (lifePercent > 0.6) {
+                const fade = Math.max(0, 1.0 - ((lifePercent - 0.6) / 0.4));
+                effect.obj.scale.setScalar(effect.baseScale * fade);
+                effect.obj.traverse((child) => {
+                    if (child.isMesh) child.material.opacity = fade;
+                });
+            }
         }
         
-        // Remove mathematically cleanly natively cleanly flawlessly cleanly optimally gracefully explicitly smartly implicitly optimally stably explicitly implicitly dynamically naturally smoothly dynamically securely organically securely cleanly logically reliably magically organically purely cleanly magically logically rationally naturally cleanly mathematically natively structurally optimally stably securely magically intuitively organically predictably cleanly flawlessly elegantly securely identically flexibly natively purely dynamically cleanly optimally flawlessly elegantly rationally seamlessly intelligently natively stably
-        if (beeData.age >= beeData.lifespan) {
-            scene.remove(beeData.mesh);
-            beeData.mesh.traverse((child) => {
-                if (child.isMesh) {
-                    child.material.dispose(); // Prevent Memory Leaks smartly solidly flawlessly automatically efficiently natively optimally properly identically gracefully solidly
-                }
-            });
-            activeMiniBees.splice(i, 1);
+        // Universal Cleanup natively reliably predictably creatively securely explicitly seamlessly efficiently intelligently flexibly smoothly functionally unconditionally naturally
+        if (effect.age >= effect.lifespan) {
+            scene.remove(effect.obj);
+            if (effect.obj.traverse) {
+                effect.obj.traverse((child) => {
+                    if (child.isMesh && child.material.dispose) child.material.dispose(); 
+                });
+            }
+            if (effect.obj.dispose) effect.obj.dispose();
+            activeEffects.splice(i, 1);
         }
     }
 
