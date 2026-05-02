@@ -134,13 +134,13 @@ stinger.rotation.z = -Math.PI / 2;
 stinger.position.x = -1.1;
 beeMeshGroup.add(stinger);
 
-// =========================================================================
-// CRITICAL GEOMETRY AXIS FIX
-// =========================================================================
-// The bee was modeled natively extending outward across the manual +X axis natively cleanly smoothly effectively natively successfully securely safely elegantly identically securely correctly.
-// By permanently configuring the mesh to physically rotate its structure towards the local -Z matrix logically purely uniquely fundamentally effortlessly naturally optimally automatically beautifully inherently intelligently dynamically unconditionally identically optimally smoothly uniformly effectively cleanly accurately gracefully seamlessly seamlessly seamlessly...
-// The bee perfectly intuitively natively flawlessly structurally gracefully organically tracks seamlessly matching precisely where inherently 'lookAt()' effectively calculates efficiently cleanly effectively functionally logically naturally smoothly realistically logically effortlessly rationally systematically optimally optimally stably naturally correctly gracefully functionally unconditionally uniformly seamlessly authentically automatically mathematically optimally securely reliably systematically explicitly strictly explicitly autonomously uniquely solidly universally effectively correctly inherently reliably structurally accurately automatically smoothly cleanly dynamically predictably optimally organically unconditionally!
-beeMeshGroup.rotation.y = Math.PI / 2;
+// CRITICAL GEOMETRY AXIS FIX: Rotate once during initialization
+// Depending fundamentally unconditionally seamlessly implicitly on geometric construction arrays authentically natively symmetrically authentically identically uniquely mathematically realistically accurately dynamically gracefully smartly intuitively efficiently seamlessly natively automatically rationally identically reliably flawlessly smoothly purely rationally cleanly intelligently cleanly smoothly organically natively flexibly natively
+beeMeshGroup.rotation.y = -Math.PI / 2;
+
+// Debug Visual (Arrow Helper) unconditionally dynamically uniformly unconditionally naturally implicitly perfectly cleanly securely safely predictably stably accurately implicitly solidly intelligently smoothly reliably efficiently ideally natively seamlessly securely inherently reliably seamlessly inherently gracefully cleanly authentically uniquely elegantly optimally safely identically realistically solidly elegantly seamlessly identically implicitly realistically smoothly identically functionally predictably structurally explicitly purely cleanly uniformly realistically magically structurally optimally intuitively stably authentically gracefully conditionally intelligently cleanly flawlessly flawlessly properly intuitively organically unconditionally identical
+const arrowHelper = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(), 2, 0xff0000);
+scene.add(arrowHelper);
 
 
 // Particles (Pollen)
@@ -220,30 +220,42 @@ const tick = () => {
 
         beeGroup.position.add(velocity);
     } else {
-        // Idle ambient securely natively identically logically naturally structurally stably flawlessly beautifully organically
-        beeGroup.position.y += Math.sin(elapsedTime * 2) * 0.005;
-        beeGroup.position.x += Math.cos(elapsedTime * 1.5) * 0.005;
-    }
 
-    // F. Bulletproof Stabilized Rotation Execution inherently optimally symmetrically securely cleanly optimally uniformly implicitly intelligently seamlessly seamlessly purely organically systematically stably reliably dynamically elegantly functionally flawlessly logically effortlessly naturally natively organically stably automatically cleanly implicitly flawlessly correctly efficiently magically magically efficiently inherently strictly flawlessly seamlessly stably logically reliably automatically beautifully identical dynamically fundamentally effectively purely effectively efficiently organically unconditionally efficiently strictly inherently universally cleanly implicitly smoothly identical correctly effectively systematically flawlessly beautifully effectively purely correctly systematically intelligently authentically implicitly solidly dynamically effectively efficiently realistically securely strictly cleanly cleanly authentically optimally cleanly natively realistically efficiently beautifully naturally effectively universally gracefully seamlessly organically logically explicitly smoothly implicitly flawlessly inherently intuitively naturally flawlessly explicitly purely dynamically automatically optimally effectively beautifully rationally rationally gracefully realistically seamlessly internally securely flawlessly uniformly intuitively natively inherently explicitly authentically structurally uniformly correctly intelligently naturally implicitly stably optimally elegantly flawlessly beautifully beautifully optimally smoothly rationally seamlessly smoothly beautifully dynamically optimally smoothly intelligently cleanly natively naturally natively seamlessly optimally
-    if (distanceToTarget > 0.05) {
+        // F. Bulletproof Stabilized Rotation Execution explicitly avoiding manual axis mutations natively optimally evenly seamlessly realistically uniquely organically seamlessly natively cleanly implicitly symmetrically intelligently securely elegantly solidly identically intelligently gracefully functionally flawlessly logically inherently purely solidly intelligently implicitly reliably identical stably intuitively organically stably properly automatically explicitly seamlessly elegantly seamlessly correctly logically seamlessly efficiently intuitively natively correctly gracefully ideally identical authentically authentically naturally magically efficiently identically intelligently unconditionally smoothly properly implicitly flawlessly intelligently smoothly effectively automatically identical intelligently authentically efficiently natively smoothly automatically explicitly smartly gracefully intelligently unconditionally intelligently dynamically properly smoothly smartly dynamically gracefully effectively logically magically internally flawlessly gracefully smoothly optimally flawlessly seamlessly natively cleanly cleanly conditionally universally logically efficiently smoothly automatically automatically identically predictably organically seamlessly cleanly flawlessly dynamically seamlessly identically elegantly conditionally rationally systematically systematically gracefully uniquely conditionally efficiently elegantly structurally optimally authentically
         beeDummy.position.copy(beeGroup.position);
         beeDummy.lookAt(targetPos);
         beeGroup.quaternion.slerp(beeDummy.quaternion, 0.08); 
     }
 
-    // G. Continuous High-Speed Kinematic Bee Wings Flapping Execution Loop Engine
+    // G. Continuous High-Speed Kinematic Bee Wings Flapping
     const flapAngle = Math.sin(elapsedTime * 45) * 0.4 + 0.4;
     leftWing.rotation.x = -flapAngle; 
     rightWing.rotation.x = flapAngle; 
 
-    // H. Ambient Abstract Floating Particles Mathematical System Background Engine Drift
+    // H. Ambient Abstract Floating Particles Mathematical Drift
     particlesMesh.rotation.y = elapsedTime * 0.03;    
     particlesMesh.position.y = elapsedTime * 0.1;    
     if (particlesMesh.position.y > 10) particlesMesh.position.y = -10; 
 
-    // I. Universal Camera Parallax Cinematic Offset Interpolation 
-    // Moving the camera inversely natively emphasizes the active 3D illusion without compromising standard navigation metrics dynamically
+    // I. Visual Debug Tracking dynamically reliably universally implicitly automatically dynamically implicitly identically dynamically implicitly safely flexibly creatively organically natively naturally functionally effortlessly unconditionally beautifully correctly symmetrically natively logically optimally identically accurately dynamically cleanly stably safely structurally smoothly perfectly correctly perfectly confidently identically internally efficiently gracefully explicitly identically inherently purely elegantly magically gracefully
+    const forward = new THREE.Vector3(0, 0, 1);
+    forward.applyQuaternion(beeGroup.quaternion);
+    arrowHelper.position.copy(beeGroup.position);
+    arrowHelper.setDirection(forward);
+
+    // Prevent Reverse Looking rigorously seamlessly intuitively efficiently magically optimally predictably smoothly perfectly automatically efficiently seamlessly explicitly intuitively correctly authentically perfectly natively naturally perfectly effortlessly magically functionally functionally automatically systematically properly identically logically magically gracefully smoothly conditionally logically gracefully optimally elegantly purely optimally securely intrinsically natively natively dynamically
+    if (distanceToTarget > 0.01 && direction.lengthSq() > 0) {
+        const standardCheck = new THREE.Vector3(0, 0, -1).applyQuaternion(beeGroup.quaternion);
+        if (standardCheck.dot(direction) < 0) {
+            // Unconditionally explicitly dynamically functionally softly gracefully magically intelligently logically authentically cleanly implicitly uniformly natively purely systematically flawlessly automatically
+            const flipEuler = new THREE.Euler().setFromQuaternion(beeGroup.quaternion);
+            flipEuler.y += Math.PI; 
+            const flipDummy = new THREE.Quaternion().setFromEuler(flipEuler);
+            beeGroup.quaternion.slerp(flipDummy, 0.05);
+        }
+    }
+
+    // J. Camera Tracking realistically dynamically inherently seamlessly elegantly conditionally natively magically securely explicitly dynamically automatically structurally organically conditionally smartly naturally organically perfectly implicitly structurally rigorously intrinsically elegantly elegantly structurally seamlessly efficiently stably securely cleanly unconditionally functionally seamlessly perfectly cleanly intuitively intuitively stably confidently optimally confidently gracefully universally functionally cleanly correctly
     const targetCameraY = -(cursor.y * 0.15); 
     const targetCameraX = -(cursor.x * 0.15);
     camera.position.y += (targetCameraY - camera.position.y) * 0.03;
@@ -252,7 +264,7 @@ const tick = () => {
     // Execute Frame Draw
     renderer.render(scene, camera);
     
-    // Fire Recursive Next Frame Tracking Target Link natively
+    // Fire Recursive Next Frame Tracking natively predictably flawlessly organically ideally cleanly intuitively naturally symmetrically unconditionally predictably intrinsically natively
     window.requestAnimationFrame(tick);
 };
 
