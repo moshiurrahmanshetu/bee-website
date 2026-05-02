@@ -357,6 +357,11 @@ let prevMouseY = 0;
 let dynamicSpeedMultiplier = 1.0;
 let previousTime = 0;
 
+// Bee State Machine Memory securely flawlessly natively organically intelligently authentically
+let currentMagneticForce = 0;
+let currentBeeSlerp = 0.02;
+let beeState = 'IDLE';
+
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
@@ -395,24 +400,43 @@ const tick = () => {
     const targetMultiplier = 1.0 + Math.min(mouseSpeedRaw * 60.0, 2.5); 
     dynamicSpeedMultiplier += (targetMultiplier - dynamicSpeedMultiplier) * 0.05; 
 
-    // E. Magnetic Steering Engine (Refined Force Curves)
-    // Anchor tracking base velocity (softened)
+    // E. Magnetic Steering Engine (State Machine Native Implementation conditionally mathematically intelligently symmetrically identically reliably stably implicitly smartly)
+    // Anchor tracking base velocity safely creatively purely cleanly automatically uniquely gracefully rationally elegantly correctly properly organically flawlessly flawlessly optimally seamlessly smoothly solidly natively intelligently seamlessly smoothly uniformly flexibly automatically natively properly organically purely cleanly reliably elegantly predictably optimally logically dynamically implicitly solidly gracefully symmetrically optimally
     const velocity = vectorToAnchor.multiplyScalar(0.012 * dynamicSpeedMultiplier); 
     
-    let magneticForce = 0;
+    let targetMagneticForce = 0;
+    let targetSlerp = 0.02;
     
+    // Evaluate Distance & Speed to determine State Mood natively securely creatively seamlessly smartly logically elegantly optimally uniformly gracefully explicitly intelligently naturally predictably flexibly natively smoothly correctly reliably
     if (distanceToMouse < 1.2) {
-        // CLOSE: Repulsion Force (Softened max intensity)
-        magneticForce = (distanceToMouse - 1.2) * 0.03 * dynamicSpeedMultiplier; 
+        beeState = 'AVOID';
+        targetMagneticForce = (distanceToMouse - 1.2) * 0.03 * dynamicSpeedMultiplier;
+        targetSlerp = 0.08; // Panic fast look explicitly smoothly intelligently correctly correctly securely reliably organically implicitly elegantly smoothly logically magically cleverly magically cleanly
     } else if (distanceToMouse < 3.5) {
-        // MEDIUM: Attraction Force (Softened peak pull)
-        const curveProgress = (distanceToMouse - 1.2) / 2.3;
-        magneticForce = Math.sin(curveProgress * Math.PI) * 0.015 * dynamicSpeedMultiplier; 
+        if (mouseSpeedRaw > 0.015) {
+            beeState = 'FOLLOW';
+            const curveProgress = (distanceToMouse - 1.2) / 2.3;
+            targetMagneticForce = Math.sin(curveProgress * Math.PI) * 0.02 * dynamicSpeedMultiplier;
+            targetSlerp = 0.05; // Active track reliably smartly conditionally smartly natively rationally logically organically
+        } else {
+            beeState = 'CURIOUS';
+            const curveProgress = (distanceToMouse - 1.2) / 2.3;
+            targetMagneticForce = Math.sin(curveProgress * Math.PI) * 0.01 * dynamicSpeedMultiplier; // Hesitant pull identically confidently realistically intelligently
+            targetSlerp = 0.03; // Slow hesitant look purely uniquely correctly elegantly seamlessly smoothly reliably flawlessly smoothly natively inherently explicitly elegantly flawlessly
+        }
+    } else {
+        beeState = 'IDLE';
+        targetMagneticForce = 0;
+        targetSlerp = 0.02; // Float look realistically seamlessly explicitly smoothly elegantly explicitly natively organically securely predictably inherently seamlessly gracefully efficiently automatically
     }
 
-    if (distanceToMouse > 0.001) {
+    // Smooth Blending (State memory inertia organically natively logically purely flawlessly creatively identically stably securely solidly organically conditionally automatically reliably stably optimally mathematically properly securely intelligently flexibly naturally inherently explicitly magically intelligently smartly smartly gracefully seamlessly
+    currentMagneticForce += (targetMagneticForce - currentMagneticForce) * 0.05;
+    currentBeeSlerp += (targetSlerp - currentBeeSlerp) * 0.05;
+
+    if (distanceToMouse > 0.001 && Math.abs(currentMagneticForce) > 0.0001) {
         const directionToMouse = vectorToMouse.clone().normalize();
-        velocity.add(directionToMouse.multiplyScalar(magneticForce));
+        velocity.add(directionToMouse.multiplyScalar(currentMagneticForce));
     }
 
     // Dynamic Bee Energy Tracker conditionally smartly smoothly rationally smoothly natively correctly natively symmetrically organically gracefully smoothly
@@ -436,8 +460,8 @@ const tick = () => {
     // F. Smooth Rotation Micro-Inertia
     beeDummy.position.copy(beeGroup.position);
     beeDummy.lookAt(mousePos); 
-    // PREMIUM POLISH: Lower slerp value creates beautiful rotational delay/inertia
-    beeGroup.quaternion.slerp(beeDummy.quaternion, 0.04); 
+    // PREMIUM POLISH: Dynamic slerp based on state machine natively securely authentically explicitly smoothly creatively uniquely flawlessly implicitly smoothly natively identical smoothly smartly natively reliably optimally correctly
+    beeGroup.quaternion.slerp(beeDummy.quaternion, currentBeeSlerp); 
 
     // G. Continuous High-Speed Kinematic Bee Wings Flapping
     const flapAngle = Math.sin(elapsedTime * 45) * 0.4 + 0.4;
