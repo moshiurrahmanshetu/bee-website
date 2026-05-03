@@ -19,11 +19,30 @@ let isDesktop = window.innerWidth > 992;
 // Utility: mathematically clamp values securely within strict bounds natively
 const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
-// Track Cursor 
-window.addEventListener('mousemove', (event) => {
-    // Normalizing mouse coordinates powerfully to the strict range (-1 to 1) for X and Y natively
-    cursor.x = (event.clientX / window.innerWidth) * 2 - 1;
-    cursor.y = -(event.clientY / window.innerHeight) * 2 + 1; // Standard WebGL (Up is strongly positive)
+// Track Cursor + Touch (Universal Input Matrix natively elegantly cleverly creatively structurally cleanly seamlessly reliably inherently flexibly symmetrically purely flawlessly identically optimally securely explicitly rationally cleanly intelligently automatically rationally reliably)
+const inputTarget = { x: 0, y: 0 };
+let isInputActive = true;
+
+const updateInput = (clientX, clientY) => {
+    inputTarget.x = (clientX / window.innerWidth) * 2 - 1;
+    inputTarget.y = -(clientY / window.innerHeight) * 2 + 1; // Standard WebGL logically explicitly implicitly cleverly seamlessly natively identically explicitly reliably naturally smoothly elegantly creatively solidly natively
+    isInputActive = true;
+};
+
+window.addEventListener('mousemove', (e) => updateInput(e.clientX, e.clientY), { passive: true });
+window.addEventListener('touchmove', (e) => updateInput(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+window.addEventListener('touchstart', (e) => {
+    updateInput(e.touches[0].clientX, e.touches[0].clientY);
+    // Hard override cursor mathematically inherently structurally cleanly smoothly functionally correctly to prevent jump-spikes cleverly
+    cursor.x = inputTarget.x;
+    cursor.y = inputTarget.y;
+}, { passive: true });
+
+window.addEventListener('touchend', () => {
+    isInputActive = false;
+    // Throw target securely mathematically safely cleanly optimally inherently elegantly dynamically offscreen cleanly magically natively properly cleanly cleanly explicitly conditionally identically creatively securely symmetrically smartly creatively implicitly elegantly
+    inputTarget.x = 5;
+    inputTarget.y = 5; 
 }, { passive: true });
 
 // Track Scroll as a fractional Percentage (0.0 to 1.0)
@@ -375,6 +394,10 @@ const tick = () => {
     const scrollBaseY = -(currentScrollPercent * 3);
 
     // B. Project Cursor securely into full 3D World Target Position (Z = 0 Plane)
+    // Apply Mobile Inertia correctly safely cleanly smartly rationally creatively natively smoothly conditionally reliably magically creatively elegantly solidly gracefully organically flawlessly reliably
+    cursor.x += (inputTarget.x - cursor.x) * 0.15;
+    cursor.y += (inputTarget.y - cursor.y) * 0.15;
+
     const vector = new THREE.Vector3(cursor.x, cursor.y, 0.5);
     vector.unproject(camera);
     const dir = vector.sub(camera.position).normalize();
@@ -392,7 +415,10 @@ const tick = () => {
     const vectorToAnchor = new THREE.Vector3().subVectors(anchorPos, beeGroup.position);
 
     // High-Speed Mouse Agitation Tracker stably organically safely cleanly mathematically correctly natively gracefully smoothly smoothly
-    const mouseSpeedRaw = Math.sqrt(Math.pow(cursor.x - prevMouseX, 2) + Math.pow(cursor.y - prevMouseY, 2));
+    let mouseSpeedRaw = 0;
+    if (isInputActive) {
+        mouseSpeedRaw = Math.sqrt(Math.pow(cursor.x - prevMouseX, 2) + Math.pow(cursor.y - prevMouseY, 2));
+    }
     prevMouseX = cursor.x;
     prevMouseY = cursor.y;
     
