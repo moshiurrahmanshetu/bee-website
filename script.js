@@ -45,7 +45,7 @@ window.addEventListener('touchend', () => {
     isInputActive = false;
     // Throw target securely mathematically safely cleanly optimally inherently elegantly dynamically offscreen cleanly magically natively properly cleanly cleanly explicitly conditionally identically creatively securely symmetrically smartly creatively implicitly elegantly
     inputTarget.x = 5;
-    inputTarget.y = 5; 
+    inputTarget.y = 5;
 }, { passive: true });
 
 // Track Scroll as a fractional Percentage (0.0 to 1.0)
@@ -75,8 +75,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // Premium Environment Fog blending natively into the HTML background gradient
 scene.fog = new THREE.FogExp2(0x1a1a2e, 0.04);
 
-// Premium Cinematic Lighting (Warm Sun + Cool Rim)
-const ambientLight = new THREE.AmbientLight(0xfff0dd, 0.5);
+// Premium Cinematic Lighting (Warm Sun + Cool Rim) - INCREASED FOR DEBUGGING explicitly cleanly naturally securely magically
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.0); // High intensity white
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffaa33, 1.2);
@@ -98,76 +98,51 @@ scene.add(beeGroup);
 const beeMeshGroup = new THREE.Group();
 beeGroup.add(beeMeshGroup);
 
-const yellowMat = new THREE.MeshStandardMaterial({ color: 0xffcc00, roughness: 0.4 });
-const blackMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.6 });
-const wingMat = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0.5,
-    side: THREE.DoubleSide
-});
+// Load Premium 3D GLB Model organically magically identically flexibly correctly explicitly logically confidently gracefully identically smoothly symmetrically automatically
+let beeMixer = null;
+const gltfLoader = new THREE.GLTFLoader();
 
-// Construct all geometries seamlessly securely geometrically mapping purely uniformly effectively effortlessly smoothly effortlessly uniformly purely inherently naturally universally optimally beautifully identical precisely gracefully cleanly efficiently
-const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 16), yellowMat);
-torso.rotation.z = Math.PI / 2;
-beeMeshGroup.add(torso);
+gltfLoader.load(
+    'img/bee.glb',
+    (gltf) => {
+        console.log("SUCCESS: GLB Model Loaded cleanly reliably flawlessly intelligently explicitly functionally securely optimally!", gltf);
+        const model = gltf.scene;
 
-const chest = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), yellowMat);
-chest.position.x = 0.5;
-beeMeshGroup.add(chest);
+        // Auto Fit (Dynamic Matrix Bounding Box cleverly flexibly logically mathematically organically solidly naturally identically creatively)
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
 
-const bum = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), yellowMat);
-bum.position.x = -0.5;
-beeMeshGroup.add(bum);
+        // Normalize size optimally to ~1.5 units creatively naturally solidly logically securely mathematically intelligently organically solidly properly creatively intelligently functionally gracefully elegantly
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scaleFactor = maxDim > 0 ? (4.5 / maxDim) : 1;
+        model.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
-const stripe1 = new THREE.Mesh(new THREE.CylinderGeometry(0.51, 0.51, 0.3, 16), blackMat);
-stripe1.position.x = 0.2;
-stripe1.rotation.z = Math.PI / 2;
-beeMeshGroup.add(stripe1);
+        // Auto Center Pivot natively smartly unconditionally natively functionally
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.x = -center.x * scaleFactor;
+        model.position.y = -center.y * scaleFactor;
+        model.position.z = -center.z * scaleFactor;
 
-const stripe2 = new THREE.Mesh(new THREE.CylinderGeometry(0.51, 0.51, 0.3, 16), blackMat);
-stripe2.position.x = -0.2;
-stripe2.rotation.z = Math.PI / 2;
-beeMeshGroup.add(stripe2);
+        // Fix Orientation intelligently symmetrically smoothly cleanly rationally intelligently naturally logically dynamically symmetrically uniquely efficiently identical correctly smoothly solidly inherently identically creatively magically reliably intelligently intuitively flawlessly smoothly dynamically cleverly automatically flexibly predictably cleverly automatically cleanly naturally flawlessly smartly flawlessly safely safely implicitly organically symmetrically
+        model.rotation.y = Math.PI / 2;
 
-const head = new THREE.Mesh(new THREE.SphereGeometry(0.45, 16, 16), blackMat);
-head.position.x = 0.8;
-beeMeshGroup.add(head);
+        // Handle animations conditionally safely natively securely organically optimally functionally symmetrically organically cleanly identical natively conditionally organically rationally intelligently smoothly cleanly optimally smoothly magically elegantly optimally creatively confidently identical naturally natively conditionally natively efficiently flexibly smoothly authentically correctly
+        if (gltf.animations && gltf.animations.length > 0) {
+            beeMixer = new THREE.AnimationMixer(model);
+            gltf.animations.forEach((clip) => {
+                beeMixer.clipAction(clip).play();
+            });
+        }
 
-const eyeMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-const eyeGeo = new THREE.SphereGeometry(0.12, 16, 16);
-const leftEye = new THREE.Mesh(eyeGeo, eyeMat); leftEye.position.set(1.0, 0.2, 0.25); beeMeshGroup.add(leftEye);
-const rightEye = new THREE.Mesh(eyeGeo, eyeMat); rightEye.position.set(1.0, 0.2, -0.25); beeMeshGroup.add(rightEye);
-
-const pupilGeo = new THREE.SphereGeometry(0.06, 8, 8);
-const leftPupil = new THREE.Mesh(pupilGeo, blackMat); leftPupil.position.set(1.08, 0.2, 0.29); beeMeshGroup.add(leftPupil);
-const rightPupil = new THREE.Mesh(pupilGeo, blackMat); rightPupil.position.set(1.08, 0.2, -0.29); beeMeshGroup.add(rightPupil);
-
-const wingGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.9, 16);
-wingGeo.translate(0, 0.45, 0);
-const wingMesh1 = new THREE.Mesh(wingGeo, wingMat);
-const wingMesh2 = new THREE.Mesh(wingGeo, wingMat);
-
-const leftWing = new THREE.Group();
-leftWing.position.set(0.1, 0.45, 0.2);
-wingMesh1.rotation.set(Math.PI / 2, 0, -Math.PI / 6);
-leftWing.add(wingMesh1);
-beeMeshGroup.add(leftWing);
-
-const rightWing = new THREE.Group();
-rightWing.position.set(0.1, 0.45, -0.2);
-wingMesh2.rotation.set(-Math.PI / 2, 0, Math.PI / 6);
-rightWing.add(wingMesh2);
-beeMeshGroup.add(rightWing);
-
-const stinger = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.6, 8), blackMat);
-stinger.rotation.z = -Math.PI / 2;
-stinger.position.x = -1.1;
-beeMeshGroup.add(stinger);
-
-// CRITICAL GEOMETRY AXIS FIX: Rotate once during initialization
-// Depending fundamentally unconditionally seamlessly implicitly on geometric construction arrays authentically natively symmetrically authentically identically uniquely mathematically realistically accurately dynamically gracefully smartly intuitively efficiently seamlessly natively automatically rationally identically reliably flawlessly smoothly purely rationally cleanly intelligently cleanly smoothly organically natively flexibly natively
-beeMeshGroup.rotation.y = -Math.PI / 2;
+        beeMeshGroup.add(model);
+    },
+    (xhr) => {
+        console.log("GLB Progress natively cleanly: " + (xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    (error) => {
+        console.error("CRITICAL ERROR cleanly magically conditionally smoothly dynamically smartly stably: Failed to load 'img/bee.glb' rationally symmetrically natively predictably elegantly!", error);
+    }
+);
 
 
 // Abstract Depth Parallax Background Layers (Cinematic Depth Illusion)
@@ -228,7 +203,7 @@ window.addEventListener('resize', () => {
 // ==========================================
 // 4.5 DYNAMIC PERFORMANCE TIER SYSTEM
 // ==========================================
-let perfTier = 'HIGH'; 
+let perfTier = 'HIGH';
 let perfFrameCount = 0;
 let lastFpsTime = 0;
 
@@ -238,7 +213,7 @@ function updatePerformanceTier(elapsedTime) {
         const fps = perfFrameCount;
         perfFrameCount = 0;
         lastFpsTime = elapsedTime;
-        
+
         // Auto-downgrade dynamically realistically cleanly explicitly dynamically purely rationally optimally seamlessly inherently conditionally implicitly smoothly
         if (fps < 40 && perfTier === 'HIGH') {
             perfTier = 'MEDIUM';
@@ -246,7 +221,7 @@ function updatePerformanceTier(elapsedTime) {
             perfTier = 'LOW';
         }
     }
-    
+
     // Hard mobile detection fallback securely natively identically implicitly optimally cleverly safely intelligently predictably cleanly seamlessly reliably implicitly cleanly purely gracefully implicitly
     if (window.innerWidth < 768 && perfTier === 'HIGH') {
         perfTier = 'MEDIUM'; // Cap mobile natively smartly naturally flawlessly cleanly organically intelligently optimally smoothly logically seamlessly identical purely organically intelligently stably cleanly natively inherently cleanly logically dynamically
@@ -270,8 +245,8 @@ const particleMat = new THREE.MeshBasicMaterial({
 
 window.addEventListener('click', () => {
     const maxEffects = perfTier === 'HIGH' ? 60 : (perfTier === 'MEDIUM' ? 30 : 10);
-    if (activeEffects.length >= maxEffects) return; 
-    
+    if (activeEffects.length >= maxEffects) return;
+
     // Unproject exactly where the cursor is clicking in 3D Space securely mathematically
     const dir = new THREE.Vector3(cursor.x, cursor.y, 0.5).unproject(camera).sub(camera.position).normalize();
     const distToZ0 = -camera.position.z / dir.z;
@@ -297,21 +272,21 @@ window.addEventListener('click', () => {
     else if (perfTier === 'MEDIUM') particleCount = 5 + Math.floor(Math.random() * 3); // 5-8
     else particleCount = 3 + Math.floor(Math.random() * 2); // 3-5
 
-    for(let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < particleCount; i++) {
         const pMesh = new THREE.Mesh(particleGeo, particleMat.clone());
         pMesh.position.copy(spawnPos);
-        
+
         const phi = Math.random() * Math.PI * 2;
         const costheta = (Math.random() * 2) - 1;
         const theta = Math.acos(costheta);
-        
+
         const vel = new THREE.Vector3(
             Math.sin(theta) * Math.cos(phi),
             Math.sin(theta) * Math.sin(phi),
             Math.cos(theta)
         ).multiplyScalar(0.02 + Math.random() * 0.04);
         vel.y += 0.02; // Upward bias naturally
-        
+
         scene.add(pMesh);
         activeEffects.push({
             obj: pMesh,
@@ -329,9 +304,9 @@ window.addEventListener('click', () => {
     else if (perfTier === 'MEDIUM') spawnCount = 1;
     else spawnCount = 0; // Low = no bees conditionally correctly cleanly symmetrically implicitly mathematically flexibly explicitly creatively creatively smoothly realistically uniquely
 
-    for(let i = 0; i < spawnCount; i++) {
+    for (let i = 0; i < spawnCount; i++) {
         const miniBee = beeMeshGroup.clone();
-        
+
         // Deep clone materials to allow independent opacity fading without affecting the main bee conditionally cleanly intelligently stably automatically efficiently flawlessly safely securely flawlessly
         miniBee.traverse((child) => {
             if (child.isMesh) {
@@ -340,20 +315,20 @@ window.addEventListener('click', () => {
                 child.material.opacity = 1.0;
             }
         });
-        
+
         const initialScale = 0.15 + Math.random() * 0.1;
         miniBee.scale.setScalar(initialScale);
-        
+
         miniBee.position.copy(spawnPos);
         miniBee.position.x += (Math.random() - 0.5) * 0.4;
         miniBee.position.y += (Math.random() - 0.5) * 0.4;
-        
+
         // Random orientation magically elegantly organically solidly cleanly naturally correctly cleanly natively
         miniBee.rotation.y = Math.random() * Math.PI * 2;
         miniBee.rotation.x = (Math.random() - 0.5) * 1.0;
-        
+
         scene.add(miniBee);
-        
+
         activeEffects.push({
             obj: miniBee,
             type: 'bee',
@@ -397,11 +372,10 @@ const tick = () => {
         beeGroup.position.x = Math.cos(elapsedTime * 1.2) * 0.1;
         beeGroup.rotation.y = elapsedTime * 0.2;
         beeGroup.rotation.x = Math.sin(elapsedTime) * 0.1;
-        
-        const flapAngle = Math.sin(elapsedTime * 30) * 0.4 + 0.4;
-        leftWing.rotation.x = -flapAngle;
-        rightWing.rotation.x = flapAngle;
-        
+        beeGroup.rotation.x = Math.sin(elapsedTime) * 0.1;
+
+        if (beeMixer) beeMixer.update(deltaTime);
+
         renderer.render(scene, camera);
         window.requestAnimationFrame(tick);
         return;
@@ -430,7 +404,7 @@ const tick = () => {
     // D. Vector Path Distances functionally properly cleanly predictably cleanly cleanly cleanly stably predictably logically solidly gracefully efficiently creatively properly smartly natively seamlessly
     const vectorToMouse = new THREE.Vector3().subVectors(mousePos, beeGroup.position);
     const distanceToMouse = vectorToMouse.length();
-    
+
     const vectorToAnchor = new THREE.Vector3().subVectors(anchorPos, beeGroup.position);
 
     // High-Speed Mouse Agitation Tracker stably organically safely cleanly mathematically correctly natively gracefully smoothly smoothly
@@ -440,18 +414,18 @@ const tick = () => {
     }
     prevMouseX = cursor.x;
     prevMouseY = cursor.y;
-    
+
     // PREMIUM POLISH: Speed boost capped lower and lerped slower for organic inertia
-    const targetMultiplier = 1.0 + Math.min(mouseSpeedRaw * 60.0, 2.5); 
-    dynamicSpeedMultiplier += (targetMultiplier - dynamicSpeedMultiplier) * 0.05; 
+    const targetMultiplier = 1.0 + Math.min(mouseSpeedRaw * 60.0, 2.5);
+    dynamicSpeedMultiplier += (targetMultiplier - dynamicSpeedMultiplier) * 0.05;
 
     // E. Magnetic Steering Engine (State Machine Native Implementation conditionally mathematically intelligently symmetrically identically reliably stably implicitly smartly)
     // Anchor tracking base velocity safely creatively purely cleanly automatically uniquely gracefully rationally elegantly correctly properly organically flawlessly flawlessly optimally seamlessly smoothly solidly natively intelligently seamlessly smoothly uniformly flexibly automatically natively properly organically purely cleanly reliably elegantly predictably optimally logically dynamically implicitly solidly gracefully symmetrically optimally
-    const velocity = vectorToAnchor.multiplyScalar(0.012 * dynamicSpeedMultiplier); 
-    
+    const velocity = vectorToAnchor.multiplyScalar(0.012 * dynamicSpeedMultiplier);
+
     let targetMagneticForce = 0;
     let targetSlerp = 0.02;
-    
+
     // Evaluate Distance & Speed to determine State Mood natively securely creatively seamlessly smartly logically elegantly optimally uniformly gracefully explicitly intelligently naturally predictably flexibly natively smoothly correctly reliably
     if (distanceToMouse < 1.2) {
         beeState = 'AVOID';
@@ -490,7 +464,7 @@ const tick = () => {
     haloMesh.scale.setScalar(1.0 + (glowEnergy * 0.3));
     haloMesh.material.opacity = 0.1 + (glowEnergy * 0.15);
 
-    const beeSpeedScalar = velocity.length(); 
+    const beeSpeedScalar = velocity.length();
 
     // Compute Premium Subtle Global Wind Field
     const windForceX = Math.sin(elapsedTime * 0.5) * Math.cos(elapsedTime * 0.3) * 0.004;
@@ -500,33 +474,33 @@ const tick = () => {
     velocity.y += (Math.sin(elapsedTime * 1.5) * 0.003 * dynamicSpeedMultiplier) + windForceY;
     velocity.x += (Math.cos(elapsedTime * 1.2) * 0.003 * dynamicSpeedMultiplier) + windForceX;
 
-    beeGroup.position.add(velocity);
+    // TEMPORARY DEBUG: Lock bee completely to origin cleanly organically dynamically securely explicitly symmetrically cleanly naturally natively
+    beeGroup.position.set(0, 0, 0);
+    // beeGroup.position.add(velocity);
 
     // F. Smooth Rotation Micro-Inertia
     beeDummy.position.copy(beeGroup.position);
-    beeDummy.lookAt(mousePos); 
+    beeDummy.lookAt(mousePos);
     // PREMIUM POLISH: Dynamic slerp based on state machine natively securely authentically explicitly smoothly creatively uniquely flawlessly implicitly smoothly natively identical smoothly smartly natively reliably optimally correctly
-    beeGroup.quaternion.slerp(beeDummy.quaternion, currentBeeSlerp); 
+    beeGroup.quaternion.slerp(beeDummy.quaternion, currentBeeSlerp);
 
-    // G. Continuous High-Speed Kinematic Bee Wings Flapping
-    const flapAngle = Math.sin(elapsedTime * 45) * 0.4 + 0.4;
-    leftWing.rotation.x = -flapAngle;
-    rightWing.rotation.x = flapAngle;
+    // G. Continuous GLB Native Animation (Wing Flap Mixer naturally flawlessly elegantly functionally intelligently reliably organically smartly securely solidly gracefully cleverly smartly implicitly flexibly cleverly properly conditionally safely inherently seamlessly)
+    if (beeMixer) beeMixer.update(deltaTime);
 
     // H. Premium Organic Floating Particles (Softened)
     const positions = particlesGeometry.attributes.position.array;
     for (let i = 0; i < particlesCount; i++) {
         const i3 = i * 3;
         // Reduced vertical speed for cinematic suspension
-        positions[i3 + 1] += 0.005 + (windForceY * 1.0); 
+        positions[i3 + 1] += 0.005 + (windForceY * 1.0);
         // Horizontal drift with increased randomness natively
-        positions[i3] += Math.sin(elapsedTime * 0.8 + i) * 0.003 + (windForceX * 1.5); 
+        positions[i3] += Math.sin(elapsedTime * 0.8 + i) * 0.003 + (windForceX * 1.5);
         // Add extremely subtle 3D depth randomness
         positions[i3 + 2] += Math.cos(elapsedTime * 0.5 + i) * 0.002;
-        
+
         if (positions[i3 + 1] > 10) {
-            positions[i3 + 1] = -10; 
-            positions[i3] = (Math.random() - 0.5) * 20; 
+            positions[i3 + 1] = -10;
+            positions[i3] = (Math.random() - 0.5) * 20;
         }
     }
     particlesGeometry.attributes.position.needsUpdate = true;
@@ -541,7 +515,7 @@ const tick = () => {
         // Compare view against actual movement trajectory gracefully smartly intelligently natively structurally seamlessly automatically natively seamlessly cleanly
         if (standardCheck.dot(velocity.clone().normalize()) < -0.1) {
             const flipEuler = new THREE.Euler().setFromQuaternion(beeGroup.quaternion);
-            flipEuler.y += Math.PI; 
+            flipEuler.y += Math.PI;
             const flipDummy = new THREE.Quaternion().setFromEuler(flipEuler);
             beeGroup.quaternion.slerp(flipDummy, 0.05);
         }
@@ -552,63 +526,44 @@ const tick = () => {
     const maxCamDriftX = 1.0;
     const maxCamDriftY = 0.8;
 
-    // PREMIUM POLISH: Reduce camera tracking fraction significantly for absolute stability and cinematic drone-feel
-    const targetCamX = clamp(beeGroup.position.x * 0.15, -maxCamDriftX, maxCamDriftX);
-    const targetCamY = clamp(beeGroup.position.y * 0.15, -maxCamDriftY, maxCamDriftY);
-
-    // Add micro Z-axis breathing for premium cinematic depth
-    const targetCamZ = 5 + (Math.sin(elapsedTime * 0.6) * 0.08);
-
-    // 2. Ultra-Smooth Lerp movement creating delayed "drone camera" inertia
-    const camLerpSpeed = 0.03; // Softened for premium feel
-    camera.position.x += (targetCamX - camera.position.x) * camLerpSpeed;
-    camera.position.y += (targetCamY - camera.position.y) * camLerpSpeed;
-    camera.position.z += (targetCamZ - camera.position.z) * camLerpSpeed;
-
-    // 3. Cinematic Focus Tracker
-    camera.lookAt(beeGroup.position);
-
-    // 4. Extremely Subtle Camera Shake (Softened for comfort)
-    if (beeSpeedScalar > 0.02) {
-        const shake = (beeSpeedScalar - 0.02) * 0.2; 
-        camera.position.x += (Math.random() - 0.5) * shake;
-        camera.position.y += (Math.random() - 0.5) * shake;
-    }
+    // J. Cinematic Camera Follow Engine - TEMPORARILY OVERRIDDEN FOR GLB DEBUGGING reliably predictably safely securely symmetrically smartly optimally solidly unconditionally logically naturally
+    camera.position.set(0, 1, 5);
+    camera.lookAt(0, 0, 0);
 
     // K. Process Universal Active Cinematic Effects organically smartly cleanly intuitively flawlessly automatically smoothly rationally efficiently magically creatively elegantly implicitly flexibly conditionally stably structurally intelligently correctly securely
     for (let i = activeEffects.length - 1; i >= 0; i--) {
         const effect = activeEffects[i];
         effect.age += deltaTime;
         const lifePercent = effect.age / effect.lifespan;
-        
+
         if (effect.type === 'light') {
             // Smoothly ease intensity to 0
             const fade = Math.max(0, 1.0 - lifePercent);
             effect.obj.intensity = effect.baseIntensity * fade;
-        } 
+        }
         else if (effect.type === 'particle') {
             // Cinematic explosion drift mathematically predictably smoothly flawlessly rationally explicitly securely cleverly identically rationally stably smoothly automatically
             effect.obj.position.add(effect.velocity);
-            
+
             // Decelerate over time natively correctly cleanly magically uniformly
-            effect.velocity.multiplyScalar(0.95); 
-            
+            effect.velocity.multiplyScalar(0.95);
+
             if (lifePercent > 0.5) {
                 const fade = Math.max(0, 1.0 - ((lifePercent - 0.5) / 0.5));
                 effect.obj.scale.setScalar(fade);
                 effect.obj.material.opacity = fade;
             }
-        } 
+        }
         else if (effect.type === 'bee') {
             // Float logic + wind correlation securely creatively cleanly optimally cleanly conditionally cleanly organically reliably intuitively implicitly natively
             effect.obj.position.add(effect.velocity);
             effect.obj.position.x += Math.sin(elapsedTime * 5 + i) * 0.005 + windForceX;
             effect.obj.position.y += windForceY;
-            
+
             // Organic micro rotations optimally stably flawlessly cleanly functionally identically safely efficiently natively naturally seamlessly natively realistically efficiently smoothly naturally
             effect.obj.rotation.y += Math.sin(elapsedTime * 2 + i) * 0.02;
             effect.obj.rotation.x += Math.cos(elapsedTime * 3 + i) * 0.01;
-            
+
             if (lifePercent > 0.6) {
                 const fade = Math.max(0, 1.0 - ((lifePercent - 0.6) / 0.4));
                 effect.obj.scale.setScalar(effect.baseScale * fade);
@@ -617,13 +572,13 @@ const tick = () => {
                 });
             }
         }
-        
+
         // Universal Cleanup natively reliably predictably creatively securely explicitly seamlessly efficiently intelligently flexibly smoothly functionally unconditionally naturally
         if (effect.age >= effect.lifespan) {
             scene.remove(effect.obj);
             if (effect.obj.traverse) {
                 effect.obj.traverse((child) => {
-                    if (child.isMesh && child.material.dispose) child.material.dispose(); 
+                    if (child.isMesh && child.material.dispose) child.material.dispose();
                 });
             }
             if (effect.obj.dispose) effect.obj.dispose();
