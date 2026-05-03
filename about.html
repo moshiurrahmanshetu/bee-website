@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honey & Hive | About Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <header class="glass-header">
+        <nav class="container nav-container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-transition">Home</a></li>
+                <li><a href="about.html" class="nav-transition active">About</a></li>
+                <li><a href="products.html" class="nav-transition">Products</a></li>
+                <li><a href="features.html" class="nav-transition">Features</a></li>
+                <li><a href="gallery.html" class="nav-transition">Gallery</a></li>
+                <li><a href="contact.html" class="nav-transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="scroll-section">
+            <div class="container grid-2">
+                <div class="card glass-panel">
+                    <h2 class="section-title">The <span class="text-gradient">Story</span></h2>
+                    <p>Our journey began with a single hive and a deep respect for nature. We believe in ethical beekeeping that prioritizes the health of the colony above all else. By working in harmony with our bees, we produce honey that is not only delicious but also sustainable.</p>
+                </div>
+                <div></div>
+            </div>
+        </section>
+        
+        <section class="scroll-section">
+            <div class="container grid-2 layout-reverse">
+                <div></div>
+                <div class="card glass-panel text-right">
+                    <h2 class="section-title">Inside the <span class="text-gradient">Hive</span></h2>
+                    <p>A bee colony is a highly complex, intelligent society. Thousands of worker bees synchronize their efforts to build, protect, and forage, sustaining a perfectly balanced ecosystem. We observe this marvel daily and strive to protect it.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>window.IS_HOME_PAGE = false;</script>
+    <script src="script.js"></script>
+    <script src="page-transition.js"></script>
+</body>
+</html>

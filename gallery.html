@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honey & Hive | Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <header class="glass-header">
+        <nav class="container nav-container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-transition">Home</a></li>
+                <li><a href="about.html" class="nav-transition">About</a></li>
+                <li><a href="products.html" class="nav-transition">Products</a></li>
+                <li><a href="features.html" class="nav-transition">Features</a></li>
+                <li><a href="gallery.html" class="nav-transition active">Gallery</a></li>
+                <li><a href="contact.html" class="nav-transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="scroll-section">
+            <div class="container center-text">
+                <h2 class="section-title">Visual <span class="text-gradient">Gallery</span></h2>
+                <div class="grid-3 gallery-grid">
+                    <div class="glass-panel img-placeholder">Buzzing Life</div>
+                    <div class="glass-panel img-placeholder">Golden Combs</div>
+                    <div class="glass-panel img-placeholder">Worker Bees</div>
+                    <div class="glass-panel img-placeholder">The Queen</div>
+                    <div class="glass-panel img-placeholder">Nectar Hunt</div>
+                    <div class="glass-panel img-placeholder">Harvest Day</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>window.IS_HOME_PAGE = false;</script>
+    <script src="script.js"></script>
+    <script src="page-transition.js"></script>
+</body>
+</html>

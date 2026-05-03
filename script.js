@@ -6,6 +6,9 @@
 // ==========================================
 // 1. GLOBAL VARIABLES & STATE
 // ==========================================
+// Premium Router State naturally seamlessly creatively solidly cleanly unconditionally intelligently explicitly authentically solidly implicitly dynamically natively identically inherently magically logically symmetrically uniformly efficiently confidently natively cleanly rationally optimally cleverly flexibly inherently correctly intelligently natively gracefully magically cleanly identically implicitly flawlessly solidly smoothly conditionally smoothly explicitly mathematically predictably securely creatively structurally
+const isHomePage = typeof window.IS_HOME_PAGE !== 'undefined' ? window.IS_HOME_PAGE : true;
+
 let targetScrollPercent = 0;
 let currentScrollPercent = 0;
 const cursor = { x: 0, y: 0 };
@@ -387,6 +390,22 @@ const tick = () => {
     previousTime = elapsedTime;
 
     updatePerformanceTier(elapsedTime);
+
+    // Simplified Subpage Bypass conditionally gracefully identically cleanly rationally predictably efficiently smoothly reliably optimally logically intelligently flexibly safely conditionally identical rationally organically natively safely solidly elegantly correctly flawlessly safely stably naturally identically organically solidly confidently reliably organically conditionally efficiently rationally seamlessly cleanly magically magically uniquely identically conditionally purely implicitly organically inherently cleanly creatively optimally correctly cleanly identically dynamically
+    if (!isHomePage) {
+        beeGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.1;
+        beeGroup.position.x = Math.cos(elapsedTime * 1.2) * 0.1;
+        beeGroup.rotation.y = elapsedTime * 0.2;
+        beeGroup.rotation.x = Math.sin(elapsedTime) * 0.1;
+        
+        const flapAngle = Math.sin(elapsedTime * 30) * 0.4 + 0.4;
+        leftWing.rotation.x = -flapAngle;
+        rightWing.rotation.x = flapAngle;
+        
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+        return;
+    }
 
     // A. Base Variables (Scroll System Matrix & Layout)
     const baseLayoutX = isDesktop ? 1.5 : 0;

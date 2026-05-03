@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honey & Hive | Products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <header class="glass-header">
+        <nav class="container nav-container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-transition">Home</a></li>
+                <li><a href="about.html" class="nav-transition">About</a></li>
+                <li><a href="products.html" class="nav-transition active">Products</a></li>
+                <li><a href="features.html" class="nav-transition">Features</a></li>
+                <li><a href="gallery.html" class="nav-transition">Gallery</a></li>
+                <li><a href="contact.html" class="nav-transition">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="scroll-section">
+            <div class="container center-text">
+                <h2 class="section-title">From Hive to <span class="text-gradient">Home</span></h2>
+                <p>Explore our premium selection of ethically sourced apiary products.</p>
+                <div class="grid-3 cards-wrapper">
+                    <div class="card glass-panel product-card">
+                        <h3>Raw Honey</h3>
+                        <p>Pure, unpasteurized honey retaining all natural enzymes.</p>
+                        <span class="price">$14.99</span>
+                    </div>
+                    <div class="card glass-panel product-card featured">
+                        <h3>Beeswax Candles</h3>
+                        <p>Naturally sweet-smelling candles that purify the air.</p>
+                        <span class="price">$24.99</span>
+                    </div>
+                    <div class="card glass-panel product-card">
+                        <h3>Royal Jelly</h3>
+                        <p>The ultimate natural supplement packed with nutrients.</p>
+                        <span class="price">$39.99</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="container">
+            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>window.IS_HOME_PAGE = false;</script>
+    <script src="script.js"></script>
+    <script src="page-transition.js"></script>
+</body>
+</html>
