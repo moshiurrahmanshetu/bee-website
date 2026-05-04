@@ -75,8 +75,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // Premium Environment Fog blending natively into the HTML background gradient
 scene.fog = new THREE.FogExp2(0x1a1a2e, 0.04);
 
-// Premium Cinematic Lighting (Warm Sun + Cool Rim) - INCREASED FOR DEBUGGING explicitly cleanly naturally securely magically
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.0); // High intensity white
+// Premium Cinematic Lighting (Warm Sun + Cool Rim)
+const ambientLight = new THREE.AmbientLight(0xfff0dd, 0.6);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffaa33, 1.2);
@@ -105,7 +105,6 @@ const gltfLoader = new THREE.GLTFLoader();
 gltfLoader.load(
     'img/bee.glb',
     (gltf) => {
-        console.log("SUCCESS: GLB Model Loaded cleanly reliably flawlessly intelligently explicitly functionally securely optimally!", gltf);
         const model = gltf.scene;
 
         // Auto Fit (Dynamic Matrix Bounding Box cleverly flexibly logically mathematically organically solidly naturally identically creatively)
@@ -114,7 +113,7 @@ gltfLoader.load(
 
         // Normalize size optimally to ~1.5 units creatively naturally solidly logically securely mathematically intelligently organically solidly properly creatively intelligently functionally gracefully elegantly
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scaleFactor = maxDim > 0 ? (4.5 / maxDim) : 1;
+        const scaleFactor = maxDim > 0 ? (1.5 / maxDim) : 1;
         model.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
         // Auto Center Pivot natively smartly unconditionally natively functionally
@@ -474,9 +473,7 @@ const tick = () => {
     velocity.y += (Math.sin(elapsedTime * 1.5) * 0.003 * dynamicSpeedMultiplier) + windForceY;
     velocity.x += (Math.cos(elapsedTime * 1.2) * 0.003 * dynamicSpeedMultiplier) + windForceX;
 
-    // TEMPORARY DEBUG: Lock bee completely to origin cleanly organically dynamically securely explicitly symmetrically cleanly naturally natively
-    beeGroup.position.set(0, 0, 0);
-    // beeGroup.position.add(velocity);
+    beeGroup.position.add(velocity);
 
     // F. Smooth Rotation Micro-Inertia
     beeDummy.position.copy(beeGroup.position);
@@ -522,13 +519,25 @@ const tick = () => {
     }
 
     // J. Cinematic Camera Follow Engine
-    // 1. Calculate subtle target positions to softly follow the bee organically
     const maxCamDriftX = 1.0;
     const maxCamDriftY = 0.8;
 
-    // J. Cinematic Camera Follow Engine - TEMPORARILY OVERRIDDEN FOR GLB DEBUGGING reliably predictably safely securely symmetrically smartly optimally solidly unconditionally logically naturally
-    camera.position.set(0, 1, 5);
-    camera.lookAt(0, 0, 0);
+    const targetCamX = clamp(beeGroup.position.x * 0.15, -maxCamDriftX, maxCamDriftX);
+    const targetCamY = clamp(beeGroup.position.y * 0.15, -maxCamDriftY, maxCamDriftY);
+    const targetCamZ = 5 + (Math.sin(elapsedTime * 0.6) * 0.08);
+
+    const camLerpSpeed = 0.03;
+    camera.position.x += (targetCamX - camera.position.x) * camLerpSpeed;
+    camera.position.y += (targetCamY - camera.position.y) * camLerpSpeed;
+    camera.position.z += (targetCamZ - camera.position.z) * camLerpSpeed;
+
+    camera.lookAt(beeGroup.position);
+
+    if (beeSpeedScalar > 0.02) {
+        const shake = (beeSpeedScalar - 0.02) * 0.2;
+        camera.position.x += (Math.random() - 0.5) * shake;
+        camera.position.y += (Math.random() - 0.5) * shake;
+    }
 
     // K. Process Universal Active Cinematic Effects organically smartly cleanly intuitively flawlessly automatically smoothly rationally efficiently magically creatively elegantly implicitly flexibly conditionally stably structurally intelligently correctly securely
     for (let i = activeEffects.length - 1; i >= 0; i--) {
@@ -622,18 +631,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Unified Navigation Link State Tracker
+        // Unified Navigation Link State Tracker (multi-page aware)
         const navLinks = document.querySelectorAll('header nav ul li a');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                if (window.scrollY >= (section.offsetTop - 250)) current = section.getAttribute('id');
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') && link.getAttribute('href').substring(1) === current) link.classList.add('active');
-            });
-        }, { passive: true });
+        const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === currentFile || (currentFile === 'index.html' && href === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
     } else {
         console.error("GSAP library not loaded.");
     }
