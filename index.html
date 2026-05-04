@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover the magic of bees, premium honey, and hive life.">
-    <title>Honey & Hive | Modern Animated Experience</title>
+    <meta name="description"
+        content="Premium pure natural honey — ethically harvested, organically sourced. Discover Sundarban, Khalshi, Black Seed, and more.">
+    <title>Honey & Hive | Pure Natural Honey From Nature</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -19,85 +19,335 @@
 
 <body>
 
-    <!-- Three.js Background Canvas -->
+    <!-- Three.js Background Canvas (Global Layer) -->
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
     <header class="glass-header">
         <nav class="container nav-container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
             <ul class="nav-links">
-                <li><a href="index.html" class="nav-transition">Home</a></li>
+                <li><a href="index.html" class="nav-transition active">Home</a></li>
                 <li><a href="about.html" class="nav-transition">About</a></li>
                 <li><a href="products.html" class="nav-transition">Products</a></li>
-                <li><a href="features.html" class="nav-transition">Features</a></li>
                 <li><a href="gallery.html" class="nav-transition">Gallery</a></li>
                 <li><a href="contact.html" class="nav-transition">Contact</a></li>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">☰</button>
         </nav>
     </header>
 
-    <!-- Main Content Layout -->
     <main>
-        <!-- 1. Hero -->
-        <section id="hero" class="scroll-section">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 1. HERO SECTION                        -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="hero" class="scroll-section hero-section">
             <div class="container hero-content">
-                <h1 class="title">Discover the <br><span class="text-gradient">Magic of Bees</span></h1>
-                <p class="subtitle">Experience nature's most incredible architects. Dive into the world of liquid gold
-                    and modern sustainability.</p>
+                <span class="hero-badge">🐝 100% Pure & Natural</span>
+                <h1 class="title">Pure Natural<br><span class="text-gradient">Honey From Nature</span></h1>
+                <p class="subtitle">Ethically harvested from the heart of pristine forests. Every drop carries the
+                    essence of wildflowers and the dedication of our bees.</p>
                 <div class="button-group">
-                    <a href="#products" class="btn btn-primary">Explore Products</a>
-                    <a href="#about-honey" class="btn btn-secondary">Learn More</a>
+                    <a href="#products" class="btn btn-primary">Shop Now</a>
+                    <a href="#benefits" class="btn btn-secondary">Why Our Honey</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12+</span>
+                        <span class="stat-label">Honey Varieties</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Happy Customers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Organic & Pure</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. About Honey -->
-        <section id="about-honey" class="scroll-section">
-            <div class="container grid-2">
-                <div class="card glass-panel">
-                    <h2 class="section-title">Liquid <span class="text-gradient">Gold</span></h2>
-                    <p>Our premium honey is organically sourced and ethically harvested to ensure the highest quality
-                        taste and nutritional value. From wildflower to manuka, each drop is a testament to the bees'
-                        hard work.</p>
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 2. FEATURED HONEY TYPES                -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="products" class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Our Collection</span>
+                <h2 class="section-title">Premium <span class="text-gradient">Honey Varieties</span></h2>
+                <p class="section-subtitle">Each jar is a celebration of nature's finest nectar — hand-collected,
+                    lab-tested, and bottled with care.</p>
+                <div class="honey-grid">
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🌳</div>
+                        <h3>Sundarban Honey</h3>
+                        <p>Wild harvested from the world's largest mangrove forest. Rich, bold, and intensely aromatic.
+                        </p>
+                        <span class="honey-tag">Bestseller</span>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🌸</div>
+                        <h3>Khalshi Flower</h3>
+                        <p>Delicate floral notes with a smooth, light golden texture. Perfect for tea and desserts.</p>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🖤</div>
+                        <h3>Black Seed (Kalojira)</h3>
+                        <p>Infused with the power of black cumin. Known for its immune-boosting properties.</p>
+                        <span class="honey-tag">Popular</span>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🌾</div>
+                        <h3>Mustard Flower</h3>
+                        <p>Creamy, crystallized texture with a subtle mustard undertone. Winter harvest specialty.</p>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🍈</div>
+                        <h3>Litchi Flower</h3>
+                        <p>Sweet and fruity with a luxurious golden hue. A seasonal favourite collected in spring.</p>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🫒</div>
+                        <h3>Jujube Flower</h3>
+                        <p>Deep amber colour with complex caramel notes. Prized in traditional medicine.</p>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🌻</div>
+                        <h3>Sunflower Honey</h3>
+                        <p>Bright, cheerful flavour profile. Quick to crystallize with a satisfying crunch.</p>
+                    </div>
+                    <div class="honey-card glass-panel">
+                        <div class="honey-icon">🌿</div>
+                        <h3>Multiflora Honey</h3>
+                        <p>A blend of countless wildflower nectars. Balanced, versatile, and everyday perfect.</p>
+                    </div>
                 </div>
-                <!-- Empty div creates layout breathing room for the 3D bee on the right -->
-                <div></div>
             </div>
         </section>
 
-        <!-- 3. Bee Life -->
-        <section id="bee-life" class="scroll-section">
-            <div class="container grid-2 layout-reverse">
-                <div></div> <!-- Empty area for the bee -->
-                <div class="card glass-panel text-right">
-                    <h2 class="section-title">Inside the <span class="text-gradient">Hive</span></h2>
-                    <p>A bee colony is a highly complex, intelligent society. Thousands of worker bees synchronize their
-                        efforts to build, protect, and forage, sustaining a perfectly balanced ecosystem.</p>
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 3. WHY OUR HONEY (BENEFITS)            -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="benefits" class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Why Choose Us</span>
+                <h2 class="section-title">Nature's Purest <span class="text-gradient">Gift</span></h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card glass-panel">
+                        <div class="benefit-icon">🧬</div>
+                        <h4>100% Pure & Organic</h4>
+                        <p>Lab-tested and certified. Zero additives, zero sugar, zero chemicals.</p>
+                    </div>
+                    <div class="benefit-card glass-panel">
+                        <div class="benefit-icon">🍃</div>
+                        <h4>Collected From Nature</h4>
+                        <p>Sourced from pristine forests and organic farmlands far from industrial pollution.</p>
+                    </div>
+                    <div class="benefit-card glass-panel">
+                        <div class="benefit-icon">💪</div>
+                        <h4>Health Benefits</h4>
+                        <p>Natural antioxidants, enzymes, and minerals that boost immunity and energy.</p>
+                    </div>
+                    <div class="benefit-card glass-panel">
+                        <div class="benefit-icon">🐝</div>
+                        <h4>Ethical Beekeeping</h4>
+                        <p>We never harm our colonies. Sustainable harvesting ensures bees thrive year-round.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Hero to Bee-Life retained for Cinematic Parallax Demo natively flexibly intelligently reliably seamlessly automatically intelligently cleanly natively reliably logically magically symmetrically naturally implicitly elegantly smartly optimally natively cleanly securely functionally intelligently reliably creatively reliably structurally smoothly flexibly correctly dynamically cleverly conditionally elegantly smartly identically creatively solidly cleverly explicitly cleanly confidently -->
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 4. HONEY PROCESS (STORY)               -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="process" class="scroll-section">
+            <div class="container">
+                <div class="center-text">
+                    <span class="section-badge">Our Journey</span>
+                    <h2 class="section-title">From Flower to <span class="text-gradient">Your Table</span></h2>
+                </div>
+                <div class="process-timeline">
+                    <div class="process-step glass-panel">
+                        <div class="step-number">01</div>
+                        <h4>Foraging</h4>
+                        <p>Bees collect nectar from organic wildflower blooms across pristine meadows and forests.</p>
+                    </div>
+                    <div class="process-step glass-panel">
+                        <div class="step-number">02</div>
+                        <h4>Maturation</h4>
+                        <p>Inside the hive, nectar transforms into honey through enzymatic processes and evaporation.
+                        </p>
+                    </div>
+                    <div class="process-step glass-panel">
+                        <div class="step-number">03</div>
+                        <h4>Extraction</h4>
+                        <p>We gently spin frames to extract honey, leaving the delicate wax comb structure intact.</p>
+                    </div>
+                    <div class="process-step glass-panel">
+                        <div class="step-number">04</div>
+                        <h4>Bottling</h4>
+                        <p>Raw honey is poured directly into glass jars — no heating, no micro-filtering, no compromise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 5. TESTIMONIALS                        -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="reviews" class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Testimonials</span>
+                <h2 class="section-title">What Our Customers <span class="text-gradient">Say</span></h2>
+                <div class="reviews-grid">
+                    <div class="review-card glass-panel">
+                        <div class="review-stars">★★★★★</div>
+                        <p>"The Sundarban honey is extraordinary. You can taste the wildness of the forest in every
+                            spoon. Nothing compares."</p>
+                        <div class="reviewer">
+                            <strong>Fatima R.</strong>
+                            <small>Verified Buyer</small>
+                        </div>
+                    </div>
+                    <div class="review-card glass-panel">
+                        <div class="review-stars">★★★★★</div>
+                        <p>"I switched from supermarket honey and the difference is night and day. My family loves the
+                            Litchi variety."</p>
+                        <div class="reviewer">
+                            <strong>Arjun K.</strong>
+                            <small>Verified Buyer</small>
+                        </div>
+                    </div>
+                    <div class="review-card glass-panel">
+                        <div class="review-stars">★★★★★</div>
+                        <p>"Beautiful packaging, incredible taste, and I love that the bees are treated ethically.
+                            Customer for life."</p>
+                        <div class="reviewer">
+                            <strong>Sarah M.</strong>
+                            <small>Verified Buyer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 6. BLOG / KNOWLEDGE                    -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="knowledge" class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Honey Knowledge</span>
+                <h2 class="section-title">Learn About <span class="text-gradient">Honey</span></h2>
+                <div class="blog-grid">
+                    <div class="blog-card glass-panel">
+                        <span class="blog-tag">Health</span>
+                        <h3>10 Amazing Health Benefits of Raw Honey</h3>
+                        <p>From boosting immunity to soothing sore throats — discover why raw honey has been nature's
+                            medicine for millennia.</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                    <div class="blog-card glass-panel">
+                        <span class="blog-tag">Guide</span>
+                        <h3>How to Identify Pure Honey at Home</h3>
+                        <p>Simple tests you can do in your kitchen to tell real honey from adulterated products.</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                    <div class="blog-card glass-panel">
+                        <span class="blog-tag">Varieties</span>
+                        <h3>Mono-Floral vs Multi-Floral: Which Is Better?</h3>
+                        <p>Understanding the difference between single-source and blended honey varieties.</p>
+                        <a href="#" class="blog-link">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 7. CTA SECTION                         -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="cta" class="scroll-section cta-section">
+            <div class="container center-text">
+                <div class="cta-wrapper glass-panel">
+                    <span class="section-badge">Limited Stock</span>
+                    <h2 class="section-title">Buy Pure Honey <span class="text-gradient">Today</span></h2>
+                    <p class="section-subtitle">Straight from the hive to your doorstep. Free shipping on orders over
+                        ৳1,500.</p>
+                    <div class="cta-trust">
+                        <span>✓ Lab Certified</span>
+                        <span>✓ Free Returns</span>
+                        <span>✓ Secure Payment</span>
+                    </div>
+                    <a href="#products" class="btn btn-primary btn-large">Shop Our Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 8. CONTACT / FOOTER SECTION            -->
+        <!-- ═══════════════════════════════════════ -->
+        <section id="contact" class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Get In Touch</span>
+                <h2 class="section-title">We'd Love to <span class="text-gradient">Hear From You</span></h2>
+                <div class="contact-wrapper glass-panel">
+                    <form onsubmit="event.preventDefault();">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <textarea rows="4" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- Footer -->
     <footer class="glass-footer">
-        <div class="container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
+                <p>Premium natural honey, ethically harvested from pristine forests.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="#products">Products</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#process">Process</a>
+                <a href="#reviews">Reviews</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>📞 +880 1234-567890</p>
+                <p>✉️ hello@honeyhive.com</p>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
             <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Core External Libraries Loaded Synchronously to Bypass Localhost CORS/MIME errors -->
-    <!-- GSAP for Smooth Parallax & Animations -->
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Three.js (r128) Global Import -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    <!-- Main Logic & Router Injection reliably dynamically efficiently authentically intelligently flexibly safely natively magically confidently intelligently efficiently automatically natively gracefully organically explicitly intelligently symmetrically natively reliably explicitly natively smartly safely symmetrically solidly magically -->
     <script>window.IS_HOME_PAGE = true;</script>
     <script src="script.js"></script>
     <script src="page-transition.js"></script>

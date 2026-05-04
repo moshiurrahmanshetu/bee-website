@@ -1,55 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Honey & Hive — our story, mission, and commitment to ethical beekeeping.">
     <title>Honey & Hive | About Us</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <canvas id="bg-canvas"></canvas>
+
     <header class="glass-header">
         <nav class="container nav-container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-transition">Home</a></li>
                 <li><a href="about.html" class="nav-transition active">About</a></li>
                 <li><a href="products.html" class="nav-transition">Products</a></li>
-                <li><a href="features.html" class="nav-transition">Features</a></li>
                 <li><a href="gallery.html" class="nav-transition">Gallery</a></li>
                 <li><a href="contact.html" class="nav-transition">Contact</a></li>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">☰</button>
         </nav>
     </header>
 
     <main>
-        <section class="scroll-section">
-            <div class="container grid-2">
-                <div class="card glass-panel">
-                    <h2 class="section-title">The <span class="text-gradient">Story</span></h2>
-                    <p>Our journey began with a single hive and a deep respect for nature. We believe in ethical beekeeping that prioritizes the health of the colony above all else. By working in harmony with our bees, we produce honey that is not only delicious but also sustainable.</p>
-                </div>
-                <div></div>
+        <!-- Page Hero Banner -->
+        <section class="scroll-section page-hero">
+            <div class="container center-text">
+                <span class="section-badge">Our Story</span>
+                <h1 class="title">About <span class="text-gradient">Honey & Hive</span></h1>
+                <p class="subtitle">Born from a love of nature and a deep respect for the bees that sustain our world.</p>
             </div>
         </section>
-        
+
+        <!-- Our Story -->
         <section class="scroll-section">
-            <div class="container grid-2 layout-reverse">
-                <div></div>
-                <div class="card glass-panel text-right">
-                    <h2 class="section-title">Inside the <span class="text-gradient">Hive</span></h2>
-                    <p>A bee colony is a highly complex, intelligent society. Thousands of worker bees synchronize their efforts to build, protect, and forage, sustaining a perfectly balanced ecosystem. We observe this marvel daily and strive to protect it.</p>
+            <div class="container">
+                <div class="split-layout">
+                    <div class="split-content">
+                        <span class="section-badge">The Beginning</span>
+                        <h2 class="section-title">How It All <span class="text-gradient">Started</span></h2>
+                        <p>It began with a single hive in the Sundarban forest. Our founder, captivated by the intricate world of bees, spent years learning the ancient art of ethical beekeeping from local communities.</p>
+                        <p>What started as a passion project soon grew into a mission — to bring the purest, most authentic honey directly from nature's heart to your table, without any compromise on quality or ethics.</p>
+                    </div>
+                    <div class="split-visual glass-panel">
+                        <div class="visual-placeholder">
+                            <span>🌳</span>
+                            <p>Sundarban Forest</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Our Purpose</span>
+                <h2 class="section-title">Mission & <span class="text-gradient">Vision</span></h2>
+                <div class="mission-grid">
+                    <div class="glass-panel mission-card">
+                        <div class="mission-icon">🎯</div>
+                        <h3>Our Mission</h3>
+                        <p>To deliver 100% pure, lab-tested honey while supporting sustainable beekeeping practices and empowering rural communities.</p>
+                    </div>
+                    <div class="glass-panel mission-card">
+                        <div class="mission-icon">🔭</div>
+                        <h3>Our Vision</h3>
+                        <p>A world where every household has access to authentic, chemical-free honey — and every bee colony is treated with the respect it deserves.</p>
+                    </div>
+                    <div class="glass-panel mission-card">
+                        <div class="mission-icon">💛</div>
+                        <h3>Our Values</h3>
+                        <p>Transparency, sustainability, and integrity guide everything we do — from hive to jar, from forest to doorstep.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Trust Us -->
+        <section class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">Trust & Quality</span>
+                <h2 class="section-title">Why Customers <span class="text-gradient">Trust Us</span></h2>
+                <div class="trust-grid">
+                    <div class="glass-panel trust-item">
+                        <span class="trust-number">100%</span>
+                        <p>Lab-Tested Purity</p>
+                    </div>
+                    <div class="glass-panel trust-item">
+                        <span class="trust-number">5+</span>
+                        <p>Years of Experience</p>
+                    </div>
+                    <div class="glass-panel trust-item">
+                        <span class="trust-number">50K+</span>
+                        <p>Happy Customers</p>
+                    </div>
+                    <div class="glass-panel trust-item">
+                        <span class="trust-number">12+</span>
+                        <p>Honey Varieties</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Beekeepers -->
+        <section class="scroll-section">
+            <div class="container center-text">
+                <span class="section-badge">The People</span>
+                <h2 class="section-title">Meet Our <span class="text-gradient">Beekeepers</span></h2>
+                <p class="section-subtitle">Skilled artisans who have been working with bees for generations.</p>
+                <div class="team-grid">
+                    <div class="glass-panel team-card">
+                        <div class="team-avatar">👨‍🌾</div>
+                        <h4>Rahim Uddin</h4>
+                        <small>Head Beekeeper — Sundarban</small>
+                        <p>20+ years of experience in wild honey collection from the mangrove forests.</p>
+                    </div>
+                    <div class="glass-panel team-card">
+                        <div class="team-avatar">👩‍🌾</div>
+                        <h4>Nasima Begum</h4>
+                        <small>Apiary Manager — Rajshahi</small>
+                        <p>Pioneered organic beekeeping techniques across mustard and litchi orchards.</p>
+                    </div>
+                    <div class="glass-panel team-card">
+                        <div class="team-avatar">👨‍🔬</div>
+                        <h4>Dr. Kamal Hossain</h4>
+                        <small>Quality Assurance Lead</small>
+                        <p>Ensures every batch meets international purity and safety standards.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="glass-footer">
-        <div class="container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
+                <p>Premium natural honey, ethically harvested.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>📞 +880 1234-567890</p>
+                <p>✉️ hello@honeyhive.com</p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
             <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
         </div>
     </footer>
@@ -62,4 +172,5 @@
     <script src="script.js"></script>
     <script src="page-transition.js"></script>
 </body>
+
 </html>

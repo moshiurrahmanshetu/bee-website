@@ -6,46 +6,80 @@
     <title>Honey & Hive | Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
     <header class="glass-header">
         <nav class="container nav-container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-transition">Home</a></li>
                 <li><a href="about.html" class="nav-transition">About</a></li>
                 <li><a href="products.html" class="nav-transition">Products</a></li>
-                <li><a href="features.html" class="nav-transition">Features</a></li>
                 <li><a href="gallery.html" class="nav-transition active">Gallery</a></li>
                 <li><a href="contact.html" class="nav-transition">Contact</a></li>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">☰</button>
         </nav>
     </header>
 
     <main>
-        <section class="scroll-section">
+        <section class="scroll-section page-hero">
             <div class="container center-text">
-                <h2 class="section-title">Visual <span class="text-gradient">Gallery</span></h2>
-                <div class="grid-3 gallery-grid">
-                    <div class="glass-panel img-placeholder">Buzzing Life</div>
-                    <div class="glass-panel img-placeholder">Golden Combs</div>
-                    <div class="glass-panel img-placeholder">Worker Bees</div>
-                    <div class="glass-panel img-placeholder">The Queen</div>
-                    <div class="glass-panel img-placeholder">Nectar Hunt</div>
-                    <div class="glass-panel img-placeholder">Harvest Day</div>
+                <span class="section-badge">Visual Journey</span>
+                <h1 class="title">Our <span class="text-gradient">Gallery</span></h1>
+                <p class="subtitle">A glimpse into the beautiful world of bees, honey, and nature.</p>
+            </div>
+        </section>
+
+        <section class="scroll-section" style="padding-top:40px;">
+            <div class="container">
+                <div class="gallery-masonry">
+                    <div class="gallery-item glass-panel tall">
+                        <div class="gallery-visual">🐝</div>
+                        <div class="gallery-caption"><h4>Buzzing Life</h4><p>Worker bees in harmony</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">🍯</div>
+                        <div class="gallery-caption"><h4>Golden Pour</h4><p>Pure raw honey flow</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">🌸</div>
+                        <div class="gallery-caption"><h4>Spring Bloom</h4><p>Litchi orchards in flower</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel tall">
+                        <div class="gallery-visual">🌳</div>
+                        <div class="gallery-caption"><h4>Sundarban Wild</h4><p>Deep in the mangroves</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">🧴</div>
+                        <div class="gallery-caption"><h4>Premium Bottles</h4><p>Hand-packaged with care</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">🐝</div>
+                        <div class="gallery-caption"><h4>Hive Inspection</h4><p>Ethical beekeeping in action</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel tall">
+                        <div class="gallery-visual">🌻</div>
+                        <div class="gallery-caption"><h4>Sunflower Fields</h4><p>Endless golden horizons</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">🔬</div>
+                        <div class="gallery-caption"><h4>Lab Testing</h4><p>Purity guaranteed</p></div>
+                    </div>
+                    <div class="gallery-item glass-panel">
+                        <div class="gallery-visual">📦</div>
+                        <div class="gallery-caption"><h4>Ready to Ship</h4><p>From hive to your door</p></div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="glass-footer">
-        <div class="container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
-            <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
-        </div>
+        <div class="container footer-bottom"><p>&copy; 2026 Honey & Hive. All rights reserved.</p></div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -55,5 +89,23 @@
     <script>window.IS_HOME_PAGE = false;</script>
     <script src="script.js"></script>
     <script src="page-transition.js"></script>
+
+    <!-- Lightbox -->
+    <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.9);justify-content:center;align-items:center;cursor:pointer;">
+        <div id="lb-content" style="text-align:center;color:#fff;font-size:4rem;"></div>
+    </div>
+    <script>
+    const lb = document.getElementById('lightbox');
+    const lbc = document.getElementById('lb-content');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+            lbc.innerHTML = item.querySelector('.gallery-visual').innerHTML +
+                '<p style="font-size:1.2rem;margin-top:1rem;">' + item.querySelector('h4').textContent + '</p>';
+            lb.style.display = 'flex';
+        });
+    });
+    lb.addEventListener('click', () => { lb.style.display = 'none'; });
+    </script>
 </body>
 </html>

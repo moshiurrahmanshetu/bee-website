@@ -613,31 +613,69 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        const animateElements = document.querySelectorAll('.glass-panel, .section-title, .subtitle, .process-list li, .btn');
+        // Individual element fade-in animations
+        const animateElements = document.querySelectorAll(
+            '.glass-panel, .section-title, .section-subtitle, .section-badge, .subtitle, .hero-badge, .btn, .cta-trust'
+        );
         animateElements.forEach(el => {
             gsap.fromTo(el,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' } }
+                { y: 40, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
+                }
             );
         });
 
+        // Staggered grid card animations
+        const grids = document.querySelectorAll('.honey-grid, .benefits-grid, .process-timeline, .reviews-grid, .blog-grid');
+        grids.forEach(grid => {
+            const cards = grid.children;
+            gsap.fromTo(cards,
+                { y: 60, opacity: 0, scale: 0.95 },
+                {
+                    y: 0, opacity: 1, scale: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: grid, start: 'top 85%', toggleActions: 'play none none reverse' }
+                }
+            );
+        });
+
+        // Hero stats counter-style reveal
+        const stats = document.querySelectorAll('.stat-item');
+        gsap.fromTo(stats,
+            { y: 30, opacity: 0 },
+            {
+                y: 0, opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: '.hero-stats', start: 'top 90%' }
+            }
+        );
+
+        // Subtle parallax shift on section containers
         const sections = document.querySelectorAll('.scroll-section');
         sections.forEach(section => {
             const container = section.querySelector('.container');
             if (container) {
                 gsap.to(container, {
-                    y: 50, ease: 'none', scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
+                    y: 40, ease: 'none',
+                    scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
                 });
             }
         });
 
-        // Unified Navigation Link State Tracker (multi-page aware)
+        // Navigation active state (multi-page aware)
         const navLinks = document.querySelectorAll('header nav ul li a');
         const currentFile = window.location.pathname.split('/').pop() || 'index.html';
         navLinks.forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
-            if (href === currentFile || (currentFile === 'index.html' && href === 'index.html')) {
+            if (href === currentFile) {
                 link.classList.add('active');
             }
         });

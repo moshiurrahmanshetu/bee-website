@@ -6,45 +6,114 @@
     <title>Honey & Hive | Products</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
     <header class="glass-header">
         <nav class="container nav-container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
+            <div class="logo">🍯 H<span class="text-gradient">IVE</span></div>
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-transition">Home</a></li>
                 <li><a href="about.html" class="nav-transition">About</a></li>
                 <li><a href="products.html" class="nav-transition active">Products</a></li>
-                <li><a href="features.html" class="nav-transition">Features</a></li>
                 <li><a href="gallery.html" class="nav-transition">Gallery</a></li>
                 <li><a href="contact.html" class="nav-transition">Contact</a></li>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">☰</button>
         </nav>
     </header>
 
     <main>
-        <section class="scroll-section">
+        <section class="scroll-section page-hero">
             <div class="container center-text">
-                <h2 class="section-title">From Hive to <span class="text-gradient">Home</span></h2>
-                <p>Explore our premium selection of ethically sourced apiary products.</p>
-                <div class="grid-3 cards-wrapper">
-                    <div class="card glass-panel product-card">
-                        <h3>Raw Honey</h3>
-                        <p>Pure, unpasteurized honey retaining all natural enzymes.</p>
-                        <span class="price">$14.99</span>
+                <span class="section-badge">Our Collection</span>
+                <h1 class="title">Premium <span class="text-gradient">Honey Store</span></h1>
+                <p class="subtitle">Hand-collected, lab-tested, and bottled with love.</p>
+            </div>
+        </section>
+
+        <section class="scroll-section" style="padding-top:40px;">
+            <div class="container">
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="forest">Forest</button>
+                    <button class="filter-btn" data-filter="floral">Floral</button>
+                    <button class="filter-btn" data-filter="specialty">Specialty</button>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card glass-panel" data-category="forest">
+                        <div class="product-image">🌳</div>
+                        <h3>Sundarban Honey</h3>
+                        <p>Wild harvested from the world's largest mangrove forest.</p>
+                        <div class="product-footer"><span class="product-price">৳850</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
                     </div>
-                    <div class="card glass-panel product-card featured">
-                        <h3>Beeswax Candles</h3>
-                        <p>Naturally sweet-smelling candles that purify the air.</p>
-                        <span class="price">$24.99</span>
+                    <div class="product-card glass-panel" data-category="floral">
+                        <div class="product-image">🌸</div>
+                        <h3>Khalshi Flower</h3>
+                        <p>Delicate floral notes with smooth golden texture.</p>
+                        <div class="product-footer"><span class="product-price">৳750</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
                     </div>
-                    <div class="card glass-panel product-card">
-                        <h3>Royal Jelly</h3>
-                        <p>The ultimate natural supplement packed with nutrients.</p>
-                        <span class="price">$39.99</span>
+                    <div class="product-card glass-panel" data-category="specialty">
+                        <div class="product-image">🖤</div>
+                        <h3>Black Seed (Kalojira)</h3>
+                        <p>Immune-boosting honey infused with black cumin.</p>
+                        <div class="product-footer"><span class="product-price">৳950</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="floral">
+                        <div class="product-image">🌾</div>
+                        <h3>Mustard Flower</h3>
+                        <p>Creamy crystallized texture. Winter harvest specialty.</p>
+                        <div class="product-footer"><span class="product-price">৳650</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="floral">
+                        <div class="product-image">🍈</div>
+                        <h3>Litchi Flower</h3>
+                        <p>Sweet and fruity with luxurious golden hue.</p>
+                        <div class="product-footer"><span class="product-price">৳800</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="specialty">
+                        <div class="product-image">🫒</div>
+                        <h3>Jujube Flower</h3>
+                        <p>Deep amber with complex caramel notes.</p>
+                        <div class="product-footer"><span class="product-price">৳900</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="forest">
+                        <div class="product-image">🌿</div>
+                        <h3>Wildflower Honey</h3>
+                        <p>Balanced blend from countless wildflower nectars.</p>
+                        <div class="product-footer"><span class="product-price">৳700</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="specialty">
+                        <div class="product-image">✨</div>
+                        <h3>Sidr Honey</h3>
+                        <p>Rare, medicinal, and exquisite. World-class premium.</p>
+                        <div class="product-footer"><span class="product-price">৳1,500</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="floral">
+                        <div class="product-image">🌻</div>
+                        <h3>Sunflower Honey</h3>
+                        <p>Bright flavour, quick to crystallize beautifully.</p>
+                        <div class="product-footer"><span class="product-price">৳600</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="floral">
+                        <div class="product-image">🌼</div>
+                        <h3>Coriander Honey</h3>
+                        <p>Warm, slightly spicy with smooth amber finish.</p>
+                        <div class="product-footer"><span class="product-price">৳700</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="forest">
+                        <div class="product-image">🏔️</div>
+                        <h3>Acacia Honey</h3>
+                        <p>Light, clear, slow to crystallize. Universally loved.</p>
+                        <div class="product-footer"><span class="product-price">৳850</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
+                    </div>
+                    <div class="product-card glass-panel" data-category="forest">
+                        <div class="product-image">🍯</div>
+                        <h3>Multiflora Honey</h3>
+                        <p>Everyday honey. Great value, great taste.</p>
+                        <div class="product-footer"><span class="product-price">৳550</span><a href="#" class="btn btn-primary btn-sm">Add to Cart</a></div>
                     </div>
                 </div>
             </div>
@@ -52,10 +121,7 @@
     </main>
 
     <footer class="glass-footer">
-        <div class="container">
-            <div class="logo">H<span class="text-gradient">IVE</span></div>
-            <p>&copy; 2026 Honey & Hive. All rights reserved.</p>
-        </div>
+        <div class="container footer-bottom"><p>&copy; 2026 Honey & Hive. All rights reserved.</p></div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -65,5 +131,17 @@
     <script>window.IS_HOME_PAGE = false;</script>
     <script src="script.js"></script>
     <script src="page-transition.js"></script>
+    <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.dataset.filter;
+            document.querySelectorAll('.product-card').forEach(c => {
+                c.style.display = (f === 'all' || c.dataset.category === f) ? '' : 'none';
+            });
+        });
+    });
+    </script>
 </body>
 </html>
