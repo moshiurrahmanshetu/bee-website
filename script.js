@@ -383,7 +383,7 @@ const tick = () => {
     // A. Base Variables (Scroll System Matrix & Layout)
     const baseLayoutX = isDesktop ? 1.5 : 0;
     currentScrollPercent += (targetScrollPercent - currentScrollPercent) * 0.05;
-    const scrollBaseY = -(currentScrollPercent * 3);
+    const scrollBaseY = -(currentScrollPercent * 0.5);
 
     // B. Project Cursor securely into full 3D World Target Position (Z = 0 Plane)
     // Apply Mobile Inertia correctly safely cleanly smartly rationally creatively natively smoothly conditionally reliably magically creatively elegantly solidly gracefully organically flawlessly reliably
@@ -503,7 +503,7 @@ const tick = () => {
     particlesGeometry.attributes.position.needsUpdate = true;
 
     // Execute Depth Parallax Engine securely flawlessly authentically naturally inherently identically beautifully cleanly mathematically uniquely securely creatively rationally optimally naturally flawlessly elegantly smartly flawlessly seamlessly magically naturally
-    bgGroup.position.y = scrollBaseY * 0.2; // Move slightly with scroll
+    bgGroup.position.y = scrollBaseY * 3.0;
     bgGroup.rotation.y = elapsedTime * 0.02;
 
     // Prevent Reverse Looking rigorously cleanly natively smartly natively dynamically efficiently cleanly implicitly inherently optimally natively intelligently
@@ -523,7 +523,7 @@ const tick = () => {
     const maxCamDriftY = 0.8;
 
     const targetCamX = clamp(beeGroup.position.x * 0.15, -maxCamDriftX, maxCamDriftX);
-    const targetCamY = clamp(beeGroup.position.y * 0.15, -maxCamDriftY, maxCamDriftY);
+    const targetCamY = clamp(beeGroup.position.y * 0.6, -maxCamDriftY, maxCamDriftY);
     const targetCamZ = 5 + (Math.sin(elapsedTime * 0.6) * 0.08);
 
     const camLerpSpeed = 0.03;
