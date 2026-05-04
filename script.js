@@ -113,7 +113,7 @@ gltfLoader.load(
 
         // Normalize size optimally to ~1.5 units creatively naturally solidly logically securely mathematically intelligently organically solidly properly creatively intelligently functionally gracefully elegantly
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scaleFactor = maxDim > 0 ? (1.5 / maxDim) : 1;
+        const scaleFactor = maxDim > 0 ? (4.5 / maxDim) : 1;
         model.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
         // Auto Center Pivot natively smartly unconditionally natively functionally
